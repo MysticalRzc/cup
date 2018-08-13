@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <property resource="properties/logback.properties"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{60} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="METRICOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <File>${logback.logdir}/metric.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logback.logdir}/metric.%d{yyyy-MM-dd}.log.zip</FileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- app logger -->
+    <logger name="mystical.cup" level="DEBUG"/>
+
+    <!-- metric logger -->
+    <logger name="com.weshare.sdk.util.AuditLogHelper" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="METRICOUT"/>
+    </logger>
+    <logger name="jdbc.sqlonly" level="ERROR">
+        <appender-ref ref="METRICOUT"/>
+    </logger>
+    <logger name="jdbc.audit" level="ERROR">
+        <appender-ref ref="METRICOUT"/>
+    </logger>
+    <logger name="jdbc.resultset" level="ERROR">
+        <appender-ref ref="METRICOUT"/>
+    </logger>
+    <logger name="jdbc.connection" level="ERROR">
+        <appender-ref ref="METRICOUT"/>
+    </logger>
+</configuration>
