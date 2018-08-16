@@ -1,16 +1,12 @@
 package mystical.cup.utils;
 
 import com.google.gson.Gson;
+import org.hibernate.validator.internal.constraintvalidators.bv.time.future.FutureValidatorForHijrahDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * Created by Rzc on 2018/8/15.
@@ -21,6 +17,7 @@ public class ThreadUtil{
     private static final int EXECUTOR_WHITE_TIME = 30;
     private static final int THREAD_POOL_MAX = 10;
     private static ExecutorService executorService = null;
+    private static final Map<String,Map<String,Future<String>>> threadResult = new Hashtable<>();
 
     private static final Map<String, List<String>> threadError = new Hashtable<>( );
 
@@ -30,11 +27,11 @@ public class ThreadUtil{
         }
         executorService.execute(thread);
     }
-    public static void submitThread(String executorGid,Thread thread){
+    public static void submitThread(String executorGid,Callable thread){
         if(executorService == null){
             executorService = Executors.newFixedThreadPool(THREAD_POOL_MAX);
         }
-        executorService.submit(thread);
+        Future<String> future = executorService.submit(thread);
     }
 
     public static void executorShutDown(){

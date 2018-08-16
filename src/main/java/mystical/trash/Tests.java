@@ -1,4 +1,4 @@
-package mystical.cup;
+package mystical.trash;
 
 import org.junit.Test;
 
