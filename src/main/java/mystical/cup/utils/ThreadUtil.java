@@ -1,7 +1,7 @@
 package mystical.cup.utils;
 
 import com.google.gson.Gson;
-import org.hibernate.validator.internal.constraintvalidators.bv.time.future.FutureValidatorForHijrahDate;
+import mystical.cup.model.vo.ThreadMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,22 +16,50 @@ public class ThreadUtil{
 
     private static final int EXECUTOR_WHITE_TIME = 30;
     private static final int THREAD_POOL_MAX = 10;
+
     private static ExecutorService executorService = null;
-    private static final Map<String,Map<String,Future<String>>> threadResult = new Hashtable<>();
 
-    private static final Map<String, List<String>> threadError = new Hashtable<>( );
+    private static final Map<String, Map<String, Future<ThreadMode>>> threadResult = new Hashtable<>( );
+    private static final Map<String, Map<String, List<String>>> threadError = new Hashtable<>( );
 
-    public static void executeThread(String executorGId, Thread thread){
+    public static void executeThread(String groupGid, String threadGid, Thread thread){
         if(executorService == null){
             executorService = Executors.newFixedThreadPool(THREAD_POOL_MAX);
         }
         executorService.execute(thread);
     }
-    public static void submitThread(String executorGid,Callable thread){
+
+    public static void submitThread(String groupGid, String threadGid, Callable thread){
         if(executorService == null){
             executorService = Executors.newFixedThreadPool(THREAD_POOL_MAX);
         }
-        Future<String> future = executorService.submit(thread);
+        Future<ThreadMode> future = executorService.submit(thread);
+        addResult(groupGid, threadGid, future);
+    }
+
+    private static void addResult(String groupGid, String threadGid, Future<ThreadMode> future){
+        if(!threadResult.containsKey(groupGid)){
+            Map<String, Future<ThreadMode>> threadMap = new Hashtable<>( );
+            threadResult.put(groupGid, threadMap);
+        }
+        if(threadResult.get(groupGid).containsKey(threadGid)){
+            logger.info("Thread exe result will be covered result={}", threadResult.get(groupGid).get(threadGid).toString());
+        }
+        threadResult.get(groupGid).put(threadGid, future);
+    }
+
+    public static Future<ThreadMode> getResult(String groupGid, String threadGid){
+        if(!threadResult.containsKey(groupGid)){
+            return null;
+        }
+        return threadResult.get(groupGid).get(threadGid);
+    }
+
+    public static Map<String, Future<ThreadMode>> getResultByGroup(String groupGid){
+        if(threadResult.containsKey(groupGid)){
+            return threadResult.get(groupGid);
+        }
+        return null;
     }
 
     public static void executorShutDown(){
@@ -46,6 +74,17 @@ public class ThreadUtil{
                 executorService.shutdownNow( );
             }
         }
+    }
+
+    synchronized public static void setThreadError(String groupGid, String threadGid, String errorData){
+        if(!threadError.containsKey(groupGid)){
+            Map<String, List<String>> threadErrorMap = new Hashtable<>();
+            threadError.put(groupGid,threadErrorMap);
+        }
+        if(!threadError.get(groupGid).containsKey(threadGid)){
+            threadError.get(groupGid).put(threadGid,new ArrayList<>());
+        }
+        threadError.get(groupGid).get(threadGid).add(errorData);
     }
 
     public static Object getThreadError(){

@@ -1,5 +1,9 @@
 package mystical.trash;
 
+import mystical.cup.model.thread.CallableDemo;
+import mystical.cup.model.vo.ThreadMode;
+import mystical.cup.utils.RandomUtil;
+import mystical.cup.utils.ThreadUtil;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,11 +18,35 @@ public class ThreadPoolTest{
     public static int count = 0;
 
     @Test
+    public void test2(){
+        String threadGroupGid = RandomUtil.randomGid( );
+        String threadGid = RandomUtil.randomGid();
+        for(int i = 0; i < 12; i++){
+            CallableDemo threadDemo = new CallableDemo(threadGroupGid,  RandomUtil.randomGid( ));
+            ThreadUtil.submitThread(threadDemo.getGroupGid( ), threadDemo.getThreadGid( ), threadDemo);
+        }
+        Map<String, Future<ThreadMode>> map = ThreadUtil.getResultByGroup(threadGroupGid);
+
+        System.out.println("==========>" + map.size() );
+//        map.forEach((a, b) -> {
+//            System.out.println("Key:" + a);
+//            try{
+//                System.out.println("value" + b.get().isSuccess());
+//            }catch(InterruptedException e){
+//                e.printStackTrace( );
+//            }catch(ExecutionException e){
+//                e.printStackTrace( );
+//            }
+//        });
+    }
+
+
+    @Test
     public void test1(){
-        Map map=Thread.getAllStackTraces();
-        System.out.println( "============>>>>" +map.size());
-        ExecutorService es = Executors.newFixedThreadPool (10);
-        List<Future<String>> resultList = new ArrayList<>();
+        Map map = Thread.getAllStackTraces( );
+        System.out.println("============>>>>" + map.size( ));
+        ExecutorService es = Executors.newFixedThreadPool(10);
+        List<Future<String>> resultList = new ArrayList<>( );
 
         for(int i = 0; i < 10; i++){
             Callable tc = new Taskdemo( );
@@ -27,7 +55,7 @@ public class ThreadPoolTest{
         }
         boolean exit = false;
         while(true){
-            System.out.println("===========================================================================" );
+            System.out.println("===========================================================================");
             for(Future<String> fs : resultList){
                 try{
                     System.out.println("线程执行结果:" + fs.get( ));
@@ -36,13 +64,15 @@ public class ThreadPoolTest{
                 }catch(ExecutionException e){
                     e.printStackTrace( );
                 }finally{
-                    es.shutdown();
+                    es.shutdown( );
                 }
             }
-            if(exit)
+            if(exit){
                 break;
-            if(resultList.size() == 10)
+            }
+            if(resultList.size( ) == 10){
                 exit = true;
+            }
             try{
                 Thread.sleep(10);
             }catch(InterruptedException e){
