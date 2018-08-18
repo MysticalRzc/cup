@@ -4,7 +4,6 @@ import mystical.cup.model.thread.CallableDemo;
 import mystical.cup.model.vo.ThreadMode;
 import mystical.cup.utils.RandomUtil;
 import mystical.cup.utils.ThreadUtil;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.concurrent.*;
 public class ThreadPoolTest{
     public static int count = 0;
 
-    @Test
     public void test2(){
         String threadGroupGid = RandomUtil.randomGid( );
         String threadGid = RandomUtil.randomGid();
@@ -41,7 +39,6 @@ public class ThreadPoolTest{
     }
 
 
-    @Test
     public void test1(){
         Map map = Thread.getAllStackTraces( );
         System.out.println("============>>>>" + map.size( ));
