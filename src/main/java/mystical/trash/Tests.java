@@ -1,7 +1,10 @@
 package mystical.trash;
 
 import com.google.gson.Gson;
+import mystical.cup.utils.RedisUtil;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.crypto.Data;
 import java.io.Serializable;
@@ -14,17 +17,15 @@ import java.util.*;
 public class Tests{
     List<Map<String, String>> data = new LinkedList<>( );
 
-    @Test
     public void getTimeStep(){
-        Calendar cld = Calendar.getInstance();
-        cld.clear();
-        Date data = new Date();
-        cld.set(data.getYear(),data.getMonth(),data.getDate());
-        cld.add(Calendar.DATE,1);
-        System.out.println(cld.getTime() );
+        Calendar cld = Calendar.getInstance( );
+        cld.clear( );
+        Date data = new Date( );
+        cld.set(data.getYear( ), data.getMonth( ), data.getDate( ));
+        cld.add(Calendar.DATE, 1);
+        System.out.println(cld.getTime( ));
     }
 
-    @Test
     public void test01(){
         String rate = "[{debit_defq:3.0,rate_defq:0.02},{debit_defq:6.0,rate_defq:0.0175}]";
 //        List<RateTerm> installments = Collections.emptyList( );
@@ -32,20 +33,19 @@ public class Tests{
 //        rateList = new Gson().fromJson(rate,List.class);
 //        System.out.println(rateList );
 
-        List<RateTerm> installments = new ArrayList<>();
+        List<RateTerm> installments = new ArrayList<>( );
         List<Map<String, Double>> rateList = new ArrayList<>( );
         rateList = new Gson( ).fromJson(rate, List.class);
-        for(Map<String,Double> map : rateList){
+        for(Map<String, Double> map : rateList){
             RateTerm rateTerm = new RateTerm( );
 //                            国内的目前没有多期天数
 //                            rateTerm.setPeriod(map.get("day_defq").intValue());
-            rateTerm.setTerm(map.get("debit_defq").intValue());
+            rateTerm.setTerm(map.get("debit_defq").intValue( ));
             rateTerm.setRate(new BigDecimal(map.get("rate_defq")));
             installments.add(rateTerm);
         }
     }
 
-    @Test
     public void test2(){
         String userGid = "4a021694b0094672b859ab40a0920752";
         System.out.println(userGid.equals("4a021694b0094672b859ab40a0920752"));
@@ -57,7 +57,8 @@ public class Tests{
         private BigDecimal rate;
         private Integer period;
     }
-//    @Test
+
+    //    @Test
     public void test(){
         init( );
         for1( );
@@ -100,8 +101,27 @@ public class Tests{
             Map<String, String> map = new HashMap<>( );
             map.put("key", "value" + count);
             data.add(map);
-            count ++;
+            count++;
         }
         System.out.println("finish init" + new Date( ).toString( ) + "=====>>> useTime:" + (System.currentTimeMillis( ) - beginTime));
+    }
+
+    private Logger logger = LoggerFactory.getLogger(Tests.class);
+
+    @Test
+    public void testlog(){
+        String msg = "hello world";
+        try{
+            logger.debug("this is info success msg={}", msg);
+            logger.warn("this is info success msg={}", msg);
+            logger.info("this is info success msg={}", msg);
+            logger.error("this is info success msg={}", msg);
+            int a = 1 / 0;
+        }catch(Exception ex){
+            logger.debug("this is info success msg={}", msg, ex);
+            logger.warn("this is info  success msg={}", msg, ex);
+            logger.info("this is info  success msg={}", msg, ex);
+            logger.error("this is info success msg={}msg={}msg={}msg={}", msg, msg, msg, msg, ex);
+        }
     }
 }
