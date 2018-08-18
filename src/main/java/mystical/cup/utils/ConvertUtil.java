@@ -24,12 +24,13 @@ public class ConvertUtil{
         return t;
     }
 
-    public static String stampToDate(String s){
-        String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long lt = new Long(s);
-        Date date = new Date(lt);
-        res = simpleDateFormat.format(date);
-        return res;
+    public static Date stampToDate(String s,String pattern){
+        try{
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            return simpleDateFormat.parse(s);
+        }catch(Exception ex){
+            return null;
+        }
     }
+
 }

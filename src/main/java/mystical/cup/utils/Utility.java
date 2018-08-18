@@ -23,5 +23,34 @@ public class Utility{
         logger.debug("getToday23HourDate, date:{}", sdf.format(cal.getTime()));
         return cal.getTime();
     }
+    public static long getMonthEndTime() {
+        Calendar day = Calendar.getInstance ( );
+        day.add (Calendar.MONTH, 1);
+        day.set (Calendar.DAY_OF_MONTH, 1);
+        day.set (Calendar.HOUR_OF_DAY, 0);
+        day.set (Calendar.MINUTE, 0);
+        day.set (Calendar.SECOND, 0);
+        day.set (Calendar.MILLISECOND, 0);
+        return day.getTime ( ).getTime ( );
+    }
 
+    private static long getDayEndTime() {
+        Calendar day = Calendar.getInstance ( );
+        day.add (Calendar.DAY_OF_MONTH, 1);
+        day.set (Calendar.HOUR_OF_DAY, 0);
+        day.set (Calendar.MINUTE, 0);
+        day.set (Calendar.SECOND, 0);
+        day.set (Calendar.MILLISECOND, 0);
+        return day.getTime ( ).getTime ( );
+    }
+
+    public static int getTimeStep_S(){
+        long timeMill = System.currentTimeMillis();
+        return (int)(timeMill/1000);
+    }
+
+    public static long getHourAgo(int hour){
+        long timeStep = System.currentTimeMillis() - hour * 3600 * 1000;
+        return timeStep;
+    }
 }
