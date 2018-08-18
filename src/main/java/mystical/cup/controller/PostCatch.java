@@ -23,8 +23,8 @@ public class PostCatch{
 
     int all = 0;
 
-    @RequestMapping(value = {"/{a}", "/{a}/{b}", "/{a}/{b}/{c}"
-            , "/{a}/{b}/{c}/{d}", "/{a}/{b}/{c}/{d}/{e}", "/{a}/{b}/{c}/{d}/{e}/{f}"}, method = RequestMethod.POST)
+    //    @RequestMapping(value = {"/postCatch/{a}", "/postCatch/{a}/{b}", "/postCatch/{a}/{b}/{c}"
+//            , "/postCatch/{a}/{b}/{c}/{d}", "/postCatch/{a}/{b}/{c}/{d}/{e}", "/postCatch/{a}/{b}/{c}/{d}/{e}/{f}"}, method = RequestMethod.POST)
     public ReturnContent controllerPostCatch(@RequestBody Map reqMap) throws UnsupportedEncodingException{
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes( )).getRequest( );
         request.setCharacterEncoding("UTF-8");
@@ -36,7 +36,7 @@ public class PostCatch{
         try{
             countData(reqMap);
         }catch(Exception ex){
-            System.out.println("countDataError" );
+            System.out.println("countDataError");
         }
         return ReturnContent.success( );
     }

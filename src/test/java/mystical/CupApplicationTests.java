@@ -1,10 +1,16 @@
 package mystical;
 
+<<<<<<< HEAD
 import com.google.gson.Gson;
 import com.sun.corba.se.pept.transport.ContactInfo;
 import mystical.cup.model.CatchModel;
 import mystical.cup.utils.ConvertUtil;
 import mystical.cup.utils.RedisUtil;
+=======
+import mystical.cup.model.CatchModel;
+import mystical.cup.utils.ConvertUtil;
+import mystical.cup.service.RedisService;
+>>>>>>> 3e2d2e6... CPN: success welcome html
 import mystical.cup.utils.Utility;
 import org.junit.After;
 import org.junit.Before;
@@ -15,8 +21,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+<<<<<<< HEAD
 import java.util.Calendar;
 import java.util.Date;
+=======
+>>>>>>> 3e2d2e6... CPN: success welcome html
 import java.util.Set;
 
 import static mystical.cup.config.ProjectConfig.REDIS_CONTROLLER_CATCH_LIST;
@@ -26,7 +35,11 @@ import static mystical.cup.config.ProjectConfig.REDIS_CONTROLLER_CATCH_LIST;
 public class CupApplicationTests{
 
     @Autowired
+<<<<<<< HEAD
     RedisUtil redisUtil;
+=======
+    RedisService redisUtil;
+>>>>>>> 3e2d2e6... CPN: success welcome html
 
     @Before
     public void init(){
