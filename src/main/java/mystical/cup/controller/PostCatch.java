@@ -8,7 +8,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +16,8 @@ import java.util.Map;
  * Created by Rzc on 2018/8/13.
  */
 @RestController
-public class ControllerCatch{
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ControllerCatch.class);
+public class PostCatch{
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(PostCatch.class);
 
     private Gson gson = new Gson( );
 
@@ -33,7 +32,7 @@ public class ControllerCatch{
         String requestURI = request.getServletPath( );
         logger.info("===================Catch Get request request===================");
         logger.info("requestURL:" + requestURI);
-//        logger.info("Catch Get request request={}", new Gson( ).toJson(reqMap));
+        logger.info("Catch Get request request={}", new Gson( ).toJson(reqMap));
         try{
             countData(reqMap);
         }catch(Exception ex){
@@ -49,4 +48,3 @@ public class ControllerCatch{
         System.out.println(String.format("当前上传%d 共上传%d 条", count, all));
     }
 }
-

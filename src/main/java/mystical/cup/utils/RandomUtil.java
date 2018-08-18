@@ -1,6 +1,5 @@
 package mystical.cup.utils;
 
-import org.junit.Test;
 
 import java.util.Random;
 import java.util.UUID;

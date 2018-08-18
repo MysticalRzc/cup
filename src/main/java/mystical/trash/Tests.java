@@ -1,8 +1,5 @@
 package mystical.trash;
 
-import org.junit.Test;
-
-import javax.xml.crypto.Data;
 import java.util.*;
 
 /**
@@ -11,7 +8,6 @@ import java.util.*;
 public class Tests{
     List<Map<String, String>> data = new LinkedList<>( );
 
-    @Test
     public void test(){
         init( );
         for1( );
