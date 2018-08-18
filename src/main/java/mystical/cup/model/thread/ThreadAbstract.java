@@ -5,7 +5,7 @@ import mystical.cup.model.vo.ThreadMode;
 /**
  * Created by Rzc on 2018/8/17.
  */
-public abstract class ThreadAbstract extends Thread{
+public abstract class ThreadAbstract implements Runnable{
     final ThreadMode threadMode = new ThreadMode( );
 
     public ThreadAbstract(String groupGid, String threadGid){

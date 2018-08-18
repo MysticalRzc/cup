@@ -15,5 +15,6 @@ public class ProjectConfig{
     //redis Name
     public static String REDIS_AREA_NAME = "Quickly:Cup:";
 
-    public static String  REDIS_CONTROLLER_CATCH_LIST = REDIS_AREA_NAME + "CtlCatch:";
+    public static String  REDIS_CONTROLLER_CATCH_LIST_POST = REDIS_AREA_NAME + "CtlCatch:Post:";
+    public static String  REDIS_CONTROLLER_CATCH_LIST_GET = REDIS_AREA_NAME + "CtlCatch:Get:";
 }

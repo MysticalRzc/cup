@@ -794,6 +794,206 @@ public class HttpCatchExample {
             addCriterion("request_type not between", value1, value2, "requestType");
             return (Criteria) this;
         }
+
+        public Criteria andRequestUrlIsNull() {
+            addCriterion("request_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlIsNotNull() {
+            addCriterion("request_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlEqualTo(String value) {
+            addCriterion("request_url =", value, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlNotEqualTo(String value) {
+            addCriterion("request_url <>", value, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlGreaterThan(String value) {
+            addCriterion("request_url >", value, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("request_url >=", value, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlLessThan(String value) {
+            addCriterion("request_url <", value, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlLessThanOrEqualTo(String value) {
+            addCriterion("request_url <=", value, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlLike(String value) {
+            addCriterion("request_url like", value, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlNotLike(String value) {
+            addCriterion("request_url not like", value, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlIn(List<String> values) {
+            addCriterion("request_url in", values, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlNotIn(List<String> values) {
+            addCriterion("request_url not in", values, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlBetween(String value1, String value2) {
+            addCriterion("request_url between", value1, value2, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestUrlNotBetween(String value1, String value2) {
+            addCriterion("request_url not between", value1, value2, "requestUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressIsNull() {
+            addCriterion("request_address is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressIsNotNull() {
+            addCriterion("request_address is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressEqualTo(String value) {
+            addCriterion("request_address =", value, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressNotEqualTo(String value) {
+            addCriterion("request_address <>", value, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressGreaterThan(String value) {
+            addCriterion("request_address >", value, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("request_address >=", value, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressLessThan(String value) {
+            addCriterion("request_address <", value, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressLessThanOrEqualTo(String value) {
+            addCriterion("request_address <=", value, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressLike(String value) {
+            addCriterion("request_address like", value, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressNotLike(String value) {
+            addCriterion("request_address not like", value, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressIn(List<String> values) {
+            addCriterion("request_address in", values, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressNotIn(List<String> values) {
+            addCriterion("request_address not in", values, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressBetween(String value1, String value2) {
+            addCriterion("request_address between", value1, value2, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andRequestAddressNotBetween(String value1, String value2) {
+            addCriterion("request_address not between", value1, value2, "requestAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusIsNull() {
+            addCriterion("response_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusIsNotNull() {
+            addCriterion("response_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusEqualTo(Integer value) {
+            addCriterion("response_status =", value, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusNotEqualTo(Integer value) {
+            addCriterion("response_status <>", value, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusGreaterThan(Integer value) {
+            addCriterion("response_status >", value, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("response_status >=", value, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusLessThan(Integer value) {
+            addCriterion("response_status <", value, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("response_status <=", value, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusIn(List<Integer> values) {
+            addCriterion("response_status in", values, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusNotIn(List<Integer> values) {
+            addCriterion("response_status not in", values, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusBetween(Integer value1, Integer value2) {
+            addCriterion("response_status between", value1, value2, "responseStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponseStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("response_status not between", value1, value2, "responseStatus");
+            return (Criteria) this;
+        }
     }
 
     /**
