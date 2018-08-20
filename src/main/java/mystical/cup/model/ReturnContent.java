@@ -1,4 +1,4 @@
-package mystical.cup.model.database;
+package mystical.cup.model;
 
 import lombok.Data;
 

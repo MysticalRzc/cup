@@ -1,8 +1,11 @@
 package mystical.trash;
 
+import com.google.gson.Gson;
 import org.junit.Test;
 
 import javax.xml.crypto.Data;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -12,6 +15,49 @@ public class Tests{
     List<Map<String, String>> data = new LinkedList<>( );
 
     @Test
+    public void getTimeStep(){
+        Calendar cld = Calendar.getInstance();
+        cld.clear();
+        Date data = new Date();
+        cld.set(data.getYear(),data.getMonth(),data.getDate());
+        cld.add(Calendar.DATE,1);
+        System.out.println(cld.getTime() );
+    }
+
+    @Test
+    public void test01(){
+        String rate = "[{debit_defq:3.0,rate_defq:0.02},{debit_defq:6.0,rate_defq:0.0175}]";
+//        List<RateTerm> installments = Collections.emptyList( );
+//        List<Map<String,Double>> rateList = new ArrayList<>();
+//        rateList = new Gson().fromJson(rate,List.class);
+//        System.out.println(rateList );
+
+        List<RateTerm> installments = new ArrayList<>();
+        List<Map<String, Double>> rateList = new ArrayList<>( );
+        rateList = new Gson( ).fromJson(rate, List.class);
+        for(Map<String,Double> map : rateList){
+            RateTerm rateTerm = new RateTerm( );
+//                            国内的目前没有多期天数
+//                            rateTerm.setPeriod(map.get("day_defq").intValue());
+            rateTerm.setTerm(map.get("debit_defq").intValue());
+            rateTerm.setRate(new BigDecimal(map.get("rate_defq")));
+            installments.add(rateTerm);
+        }
+    }
+
+    @Test
+    public void test2(){
+        String userGid = "4a021694b0094672b859ab40a0920752";
+        System.out.println(userGid.equals("4a021694b0094672b859ab40a0920752"));
+    }
+
+    @lombok.Data
+    public static class RateTerm{
+        private Integer term;
+        private BigDecimal rate;
+        private Integer period;
+    }
+//    @Test
     public void test(){
         init( );
         for1( );

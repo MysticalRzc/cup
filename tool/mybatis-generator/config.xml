@@ -35,7 +35,10 @@
             targetPackage="mystical.cup.dao.mapper" targetProject="../../src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
+        <table tableName="request_statistics" domainObjectName="RequestStatistics"/>
+        <table tableName="request_job"  domainObjectName="RequestJob"/>
+        <table tableName="request_error" domainObjectName="RquestError"/>
+        <table tableName="http_catch" domainObjectName="HttpCatch"/>
         <table tableName="config_controller" domainObjectName="ConfigController"/>
-        <table tableName="http_listen" domainObjectName="HttpListen"/>
     </context>
 </generatorConfiguration>

@@ -1,7 +1,7 @@
 package mystical.cup.controller;
 
 import com.google.gson.Gson;
-import mystical.cup.model.database.ReturnContent;
+import mystical.cup.model.ReturnContent;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
