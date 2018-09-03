@@ -39,7 +39,7 @@
         <level value="INFO"/>
         <appender-ref ref="METRICOUT"/>
     </logger>
-    <logger name="jdbc.sqlonly" level="ERROR">
+    <logger name="jdbc.sqlonly" level="DEBUG">
         <appender-ref ref="METRICOUT"/>
     </logger>
     <logger name="jdbc.audit" level="ERROR">

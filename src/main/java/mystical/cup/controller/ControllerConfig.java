@@ -1,5 +1,7 @@
 package mystical.cup.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import mystical.cup.dao.mapper.ConfigControllerMapper;
 import mystical.cup.dao.mapper.HttpCatchMapper;
@@ -13,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mystical on 2018/8/10.
@@ -29,7 +33,7 @@ public class ControllerConfig{
     private HttpCatchMapper catchMapper;
 
     @GetMapping("/httpCatch/list")
-    public String httpCatchList() {
+    public String httpCatchList(int page, int limit) {
 
         HttpCatchExample example = new HttpCatchExample();
         List<HttpCatch> httpCatches = catchMapper.selectByExample(example);
@@ -37,10 +41,14 @@ public class ControllerConfig{
     }
 
     @GetMapping("/controller/list")
-    public String listController() {
-
+    public Map listController(int page, int limit) {
         ConfigControllerExample example = new ConfigControllerExample();
-        List<ConfigController> configList = configControllerMapper.selectByExample(example);
-        return new Gson().toJson(configList);
+        List<ConfigController> configList = configControllerMapper.selectLimit((page-1)*limit,limit);
+        Map resultSearch = new HashMap();
+        resultSearch.put("code",0);
+        resultSearch.put("count",configControllerMapper.countByExample(example));
+        resultSearch.put("data",configList);
+        resultSearch.put("msg","success");
+        return resultSearch;
     }
 }
