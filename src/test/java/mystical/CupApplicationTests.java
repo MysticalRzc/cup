@@ -6,6 +6,7 @@ import mystical.cup.model.CatchModel;
 import mystical.cup.utils.ConvertUtil;
 import mystical.cup.utils.RedisUtil;
 import mystical.cup.utils.Utility;
+import mystical.test.TestService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,9 +26,6 @@ import java.util.Set;
 @SpringBootTest
 public class CupApplicationTests{
 
-    @Resource(name="catchModels")
-    private CatchModel catchModeld;
-
 
     @Before
     public void init(){
@@ -41,9 +39,12 @@ public class CupApplicationTests{
 
     @Test
     public void test(){
-        System.out.println(catchModeld.getGid() );
-        System.out.println(new Gson().toJson(catchModeld) );
+        TestService testService = new TestService();
+        try{
+            testService.testGenerateToken();
+        }catch(Exception e){
+            e.printStackTrace( );
+        }
     }
-
 }
 

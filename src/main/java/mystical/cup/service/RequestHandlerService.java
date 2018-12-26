@@ -7,7 +7,7 @@ import mystical.cup.model.ReturnContent;
 import mystical.cup.model.database.ConfigController;
 import mystical.cup.model.database.ConfigControllerExample;
 import mystical.cup.model.enums.ErrorCode;
-import mystical.cup.utils.AkSkUtil;
+import mystical.cup.utils.akskUtil.AkSkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -39,7 +39,7 @@ public class RequestHandlerService{
             List<ConfigController> configControllerList = configControllerMapper.selectByExample(configControllerExample);
 
             for(ConfigController ctl : configControllerList){
-                if(AkSkUtil.checkAkSk(null)){
+                if(AkSkUtil.checkAkSk(ctl,"weshare")){
                     log.info("Catch Post response url ={} result={} ",requestURI,ctl.getOutputParam());
                     return ctl.getOutputParam();
                 }else{

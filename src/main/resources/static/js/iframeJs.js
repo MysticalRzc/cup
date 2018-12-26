@@ -13,5 +13,5 @@ var _hmt = _hmt || [];
 })();
 
 var menuClick = function(menuUrl) {
-    top.location.href ="controller/ControllerConfig.html";
+    top.location.href ="controller/consumer.html";
 };

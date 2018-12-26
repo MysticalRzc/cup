@@ -1,4 +1,4 @@
-package mystical.cup.controller.webController;
+package mystical.cup.controller.webController.producerAndConsumer;
 
 import com.google.gson.Gson;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -31,9 +31,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-public class ControllerConfig{
-
-    private static final Logger logger = LoggerFactory.getLogger(ControllerConfig.class);
+public class Consumer{
 
     @Autowired
     private ConfigControllerMapper configControllerMapper;

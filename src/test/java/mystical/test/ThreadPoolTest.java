@@ -1,4 +1,4 @@
-package mystical.trash;
+package mystical.test;
 
 import mystical.cup.model.thread.CallableDemo;
 import mystical.cup.model.vo.ThreadMode;

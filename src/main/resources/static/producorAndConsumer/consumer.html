@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>cup----接口配置</title>
+    <title>cup----demo</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="../layui/css/layui.css" media="all">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js"></script>
@@ -24,18 +25,16 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo"><a href="#"  onclick="menuClick('../main.html')">layui 后台布局</a></div>
+        <div class="layui-logo"><a href="#" onclick="menuClick('main.html')">Cup</a></div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
             <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
+                <a href="javascript:;">其他功能</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
+                    <dd><a href="">aaaa</a></dd>
+                    <dd><a href="">bbbb</a></dd>
+                    <dd><a href="">cccc</a></dd>
                 </dl>
             </li>
         </ul>
@@ -60,21 +59,19 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a href="javascript:;">cup</a>
+                    <a href="javascript:;">生产与消费</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="#" onclick="menuClick('ControllerConfig.html')">接口配置</a></dd>
+                        <dd><a href="#" onclick="menuClick('producorAndConsumer/consumer.html')">消费者</a></dd>
+                        <dd><a href="#" onclick="menuClick('producorAndConsumer/producor.html')">生产者</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">解决方案</a>
+                    <a href="javascript:;">工具</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="#" onclick="menuClick('utils/json.html')">JSON</a></dd>
+                        <dd><a href="#" onclick="menuClick('utils/timestamp.html')">TimeStamp</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>
             </ul>
         </div>
     </div>
@@ -84,17 +81,21 @@
     <div class="layui-body">
         <br>
         <div class="layui-form-item">
-            <div class="form-inline" >
+            <div class="form-inline">
                 <label for="requestUrl">&nbsp;接口地址</label>
-                <input type="text" class="form-control" id="requestUrl" style="width: 150px; height: 30px;" placeholder="请输入接口地址">
+                <input type="text" class="form-control" id="requestUrl" style="width: 150px; height: 30px;"
+                       placeholder="请输入接口地址">
                 <label for="creator">创建人</label>
-                <input type="text" class="form-control" id="creator" style="width: 150px; height: 30px;" placeholder="请输入创建人">
+                <input type="text" class="form-control" id="creator" style="width: 150px; height: 30px;"
+                       placeholder="请输入创建人">
                 <label for="dateBeginTime">开始时间</label>
                 <input id="dateBeginTime" class="form-controls" value="请选择日期" readonly>
                 <label for="dateEndTime">结束时间</label>
                 <input id="dateEndTime" class="form-controls" value="请选择日期" readonly>&nbsp;
                 <button class="layui-btn" onclick="search()">搜 索</button>
-                <button class="layui-btn" data-toggle="modal" onclick="editAddress(this)"  data-target="#addItemModel" >增 加</button>
+                <button class="layui-btn" data-toggle="modal" onclick="editAddress(this)" data-target="#addItemModel">增
+                    加
+                </button>
             </div>
         </div>
         <div class="layui-form">
@@ -135,7 +136,7 @@
         </div>
         <div id="pageItem"></div>
         <script>
-            function search(){
+            function search() {
                 var request = new Object();
                 request.controllerUrl = document.getElementById("requestUrl").value;
                 request.creator = document.getElementById("creator").value;
@@ -145,10 +146,10 @@
                     type: 'POST',
                     url: 'http://47.105.105.78:10151/cup/controller/search',
                     data: JSON.stringify(request),
-                    contentType : "application/json;charset=utf-8",
+                    contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function (data) {
-                        if(data.retCode == "0000"){
+                        if (data.retCode == "0000") {
                             var tb = document.getElementById('ctlTable');
                             var rowNum = tb.rows.length;
                             for (i = 2; i < rowNum; i++) {
@@ -161,7 +162,7 @@
                     }
                 });
             }
-            function  makePage(total) {
+            function makePage(total) {
                 layui.use(['laypage', 'layer'], function () {
                     var laypage = layui.laypage
                         , layer = layui.layer;
@@ -170,7 +171,7 @@
                         elem: 'pageItem'
                         , count: total
                         , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
-                        , jump: function (obj,first) {
+                        , jump: function (obj, first) {
                             var tb = document.getElementById('ctlTable');
                             var rowNum = tb.rows.length;
                             for (i = 2; i < rowNum; i++) {
@@ -183,21 +184,21 @@
                     });
                 });
             }
-            function getControllerData(page,limit,first) {
+            function getControllerData(page, limit, first) {
                 $.ajax({
                     type: 'POST',
                     url: 'http://47.105.105.78:10151/cup/controller/list',
                     data: {'page': page, 'limit': limit},
                     dataType: "json",
                     success: function (data) {
-                        if(first===1){
+                        if (first === 1) {
                             makePage(data.retData.count);
                         }
                         data.retData.data.forEach(addRow);
                     }
                 });
             }
-            getControllerData(1,1,1);
+            getControllerData(1, 1, 1);
             function addRow(obj) {
 //添加行
                 var newTr = ctlTable.insertRow();
@@ -226,35 +227,35 @@
                 newTd9.innerText = timestampToTime(obj.updateTime);
                 newTd10.innerHTML = '<button class="layui-btn layui-btn-sm" data-toggle="modal" onclick="editAddress(this)"  data-target="#updateItemModel" >编辑</button><button class="layui-btn layui-btn-sm" onclick="deleteLine(this)">删除</button>';
             }
-            $(function() {
+            $(function () {
                 $(".form-controls").datetimepicker({
-                    format : 'yyyy-mm-dd hh', // 展现格式
-                    startDate : "2010-01-01",// 开始时间
-                    endDate : "2020-01-01", // 结束时间
-                    autoclose : true, // 选择日期后关闭
+                    format: 'yyyy-mm-dd hh', // 展现格式
+                    startDate: "2010-01-01",// 开始时间
+                    endDate: "2020-01-01", // 结束时间
+                    autoclose: true, // 选择日期后关闭
                     // 选择器打开之后首先显示的视图
                     // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
-                    startView : 2,
+                    startView: 2,
                     // 选择器所能够提供的最精确的时间选择视图
                     // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
-                    minView : 1,
-                    language : 'zh-CN', //显示语言为中文
+                    minView: 1,
+                    language: 'zh-CN', //显示语言为中文
                 });
             });
 
             function timestampToTime(time) {
                 var timestamp = JSON.stringify(time)
-                var Y = timestamp.substring(1,5);
-                var M = timestamp.substring(6,8);
-                var D = timestamp.substring(9,11);
-                var h = timestamp.substring(12,14);
-                var m = timestamp.substring(15,17);
-                var s = timestamp.substring(18,20);
-                return Y+ "-" +M+ "-" +D+ " " +h+ ":" +m+ ":" +s;
+                var Y = timestamp.substring(1, 5);
+                var M = timestamp.substring(6, 8);
+                var D = timestamp.substring(9, 11);
+                var h = timestamp.substring(12, 14);
+                var m = timestamp.substring(15, 17);
+                var s = timestamp.substring(18, 20);
+                return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
             }
 
             function deleteLine(obj) {
-                if(window.confirm('你确定要删除吗？')){
+                if (window.confirm('你确定要删除吗？')) {
                     var requestParam = new Object();
                     var name = $(obj).parent().parent().find('td')[0];//通过parent()方法返回被选元素的直接父元素,找到第一个P标签。
                     var id = $(name).text();      //获取P标签中的内容
@@ -265,31 +266,31 @@
                         type: 'POST',
                         url: 'http://47.105.105.78:10151/cup/controller/delete',
                         data: JSON.stringify(requestParam),
-                        contentType : "application/json;charset=utf-8",
+                        contentType: "application/json;charset=utf-8",
                         dataType: "json",
                         success: function (data) {
                             alert(JSON.stringify(data.retMsg))
                             var t = document.getElementById('ctlTable');
                             t.deleteRow(obj.parentNode.parentNode.rowIndex)
                         },
-                        error:function(){
+                        error: function () {
                             alert("删除失败")
                         }
                     });
 
                     return true;
-                }else{
+                } else {
                     return false;
                 }
 
             }
             function guid() {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                        return v.toString(16);
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
                 });
             }
-            function updateController(obj){
+            function updateController(obj) {
                 var requestParam = new Object();
                 requestParam.id = document.getElementById("controllerId").value;
                 requestParam.requestUrl = document.getElementById("updateUrl").value;
@@ -305,18 +306,18 @@
                     type: 'POST',
                     url: 'http://47.105.105.78:10151/cup/controller/update',
                     data: JSON.stringify(requestParam),
-                    contentType : "application/json;charset=utf-8",
+                    contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function (data) {
                         alert(JSON.stringify(data.retMsg))
                         window.location.reload();
                     },
-                    error:function(){
+                    error: function () {
                         alert("修改失败")
                     }
                 });
             }
-            function addController(obj){
+            function addController(obj) {
                 var requestParam = new Object();
                 requestParam.id = document.getElementById("controllerId").value;
                 requestParam.requestUrl = document.getElementById("addUrl").value;
@@ -332,19 +333,19 @@
                     type: 'POST',
                     url: 'http://47.105.105.78:10151/cup/controller/add',
                     data: JSON.stringify(requestParam),
-                    contentType : "application/json;charset=utf-8",
+                    contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function (data) {
                         alert(JSON.stringify(data.retMsg))
                         window.location.reload();
                     },
-                    error:function(){
+                    error: function () {
                         alert("修改失败")
                     }
                 });
             }
 
-            function  showInfo(o) {
+            function showInfo(o) {
                 alert(o.innerHTML)
             }
             function editAddress(obj) {
@@ -379,10 +380,11 @@
     <!--==================================================================================================================================-->
     <!--=====================================================layui-footer=================================================================-->
     <div class="layui-footer">
-         Quickly---Cup
+        Quickly---Cup
         © Mystical
     </div>
-    <div class="modal fade" id="updateItemModel" tabindex="-1" role="dialog" aria-labelledby="updateItemModel" aria-hidden="true">
+    <div class="modal fade" id="updateItemModel" tabindex="-1" role="dialog" aria-labelledby="updateItemModel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -394,28 +396,37 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-inline" >
+                    <div class="form-inline">
                         <label>id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        <input type="text" class="form-control" id="controllerId" style="width: 400px; height: 30px;" readonly="readonly"> <br><br>
+                        <input type="text" class="form-control" id="controllerId" style="width: 400px; height: 30px;"
+                               readonly="readonly"> <br><br>
                         <label>接口地址:</label>
-                        <input type="text" class="form-control" id="updateUrl" style="width: 400px; height: 30px;" placeholder="请输入接口地址"><br><br>
+                        <input type="text" class="form-control" id="updateUrl" style="width: 400px; height: 30px;"
+                               placeholder="请输入接口地址"><br><br>
                         <label for="updateReuqestParam">输入参数:</label>
-                        <textarea  type="text" class="form-control" id="updateReuqestParam" style="width: 400px; height: 100px;" placeholder="请输入输入参数"></textarea><br><br>
+                        <textarea type="text" class="form-control" id="updateReuqestParam"
+                                  style="width: 400px; height: 100px;" placeholder="请输入输入参数"></textarea><br><br>
                         <label for="updateResponseParam">输出参数:</label>
-                        <textarea  type="text" class="form-control" id="updateResponseParam" style="width: 400px; height: 100px;" placeholder="请输入输出参数"></textarea><br><br>
+                        <textarea type="text" class="form-control" id="updateResponseParam"
+                                  style="width: 400px; height: 100px;" placeholder="请输入输出参数"></textarea><br><br>
                         <label for="updateType">请求方式:</label>
-                            <select class="form-control" data-example-ids="select-form-control" class="form-control" id="updateType" style="width: 400px; height: 30px;" placeholder="postMethod">
-                                <option>通用</option>
-                                <option>POST</option>
-                                <option>GET</option>
-                            </select>
-                        <!--<input type="text" class="form-control" id="updateType" style="width: 400px; height: 30px;" placeholder="postMethod">--><br><br>
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="updateType" style="width: 400px; height: 30px;" placeholder="postMethod">
+                            <option>通用</option>
+                            <option>POST</option>
+                            <option>GET</option>
+                        </select>
+                        <!--<input type="text" class="form-control" id="updateType" style="width: 400px; height: 30px;" placeholder="postMethod">-->
+                        <br><br>
                         <label for="updateAK">A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
-                        <input type="text" class="form-control" id="updateAK" style="width: 400px; height: 30px;" placeholder="AK"><br><br>
+                        <input type="text" class="form-control" id="updateAK" style="width: 400px; height: 30px;"
+                               placeholder="AK"><br><br>
                         <label for="updateSK">S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
-                        <input type="text" class="form-control" id="updateSK" style="width: 400px; height: 30px;" placeholder="SK"><br><br>
+                        <input type="text" class="form-control" id="updateSK" style="width: 400px; height: 30px;"
+                               placeholder="SK"><br><br>
                         <label for="updateDesc">描 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述 :</label>
-                        <input type="text" class="form-control" id="updateDesc" style="width: 400px; height: 30px;" placeholder="描述"><br><br>
+                        <input type="text" class="form-control" id="updateDesc" style="width: 400px; height: 30px;"
+                               placeholder="描述"><br><br>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -428,7 +439,8 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
-    <div class="modal fade" id="addItemModel" tabindex="-1" role="dialog" aria-labelledby="addItemModel" aria-hidden="true">
+    <div class="modal fade" id="addItemModel" tabindex="-1" role="dialog" aria-labelledby="addItemModel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -440,26 +452,33 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-inline" >
+                    <div class="form-inline">
                         <label>接口地址:</label>
-                        <input type="text" class="form-control" id="addUrl" style="width: 400px; height: 30px;" placeholder="请输入接口地址"><br><br>
+                        <input type="text" class="form-control" id="addUrl" style="width: 400px; height: 30px;"
+                               placeholder="请输入接口地址"><br><br>
                         <label for="addReuqestParam">输入参数:</label>
-                        <textarea  type="text" class="form-control" id="addReuqestParam" style="width: 400px; height: 100px;" placeholder="请输入输入参数"></textarea><br><br>
+                        <textarea type="text" class="form-control" id="addReuqestParam"
+                                  style="width: 400px; height: 100px;" placeholder="请输入输入参数"></textarea><br><br>
                         <label for="addResponseParam">输出参数:</label>
-                        <textarea  type="text" class="form-control" id="addResponseParam" style="width: 400px; height: 100px;" placeholder="请输入输出参数"></textarea><br><br>
+                        <textarea type="text" class="form-control" id="addResponseParam"
+                                  style="width: 400px; height: 100px;" placeholder="请输入输出参数"></textarea><br><br>
                         <label for="addType">请求方式:</label>
-                        <select class="form-control" data-example-ids="select-form-control" class="form-control" id="addType" style="width: 400px; height: 30px;" placeholder="postMethod">
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="addType" style="width: 400px; height: 30px;" placeholder="postMethod">
                             <option>通用</option>
                             <option>POST</option>
                             <option>GET</option>
                         </select>
                         <br><br>
                         <label for="addAK">A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K :</label>
-                        <input type="text" class="form-control" id="addAK" style="width: 400px; height: 30px;" placeholder="AK"><br><br>
+                        <input type="text" class="form-control" id="addAK" style="width: 400px; height: 30px;"
+                               placeholder="AK"><br><br>
                         <label for="addSK">S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K :</label>
-                        <input type="text" class="form-control" id="addSK" style="width: 400px; height: 30px;" placeholder="SK"><br><br>
+                        <input type="text" class="form-control" id="addSK" style="width: 400px; height: 30px;"
+                               placeholder="SK"><br><br>
                         <label for="addDesc">描 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述 :</label>
-                        <input type="text" class="form-control" id="addDesc" style="width: 400px; height: 30px;" placeholder="描述"><br><br>
+                        <input type="text" class="form-control" id="addDesc" style="width: 400px; height: 30px;"
+                               placeholder="描述"><br><br>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -473,20 +492,23 @@
         </div><!-- /.modal -->
     </div>
 </div>
+<!--==================================================================================================================================-->
+<!--==========================================================js======================================================================-->
 <script>
+    var baseUrl = "../"
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
     });
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
         var hm = document.createElement("script");
         hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
-    var menuClick = function(menuUrl) {
-        top.location.href =menuUrl;
+    var menuClick = function (menuUrl) {
+        top.location.href = baseUrl + menuUrl;
     };
 </script>
 </body>

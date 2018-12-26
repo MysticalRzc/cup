@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import mystical.cup.config.ProjectConfig;
 import mystical.cup.model.CatchModel;
+import mystical.cup.utils.ContextHoldler;
 import mystical.cup.utils.RandomUtil;
 import mystical.cup.utils.RedisUtil;
+import mystical.cup.utils.akskUtil.AkSkUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -49,6 +51,7 @@ public class ControllerHandler{
     public Object around(ProceedingJoinPoint point, AccessCheck accessCheck){
         resetThreadName();
         logger.debug("===> Around AOP start");
+        ContextHoldler.put("aroundAOP","proceedingJointPoint",point);
         CatchModel catchModel = new CatchModel( );
         initCatchMode(catchModel);
         logger.debug("catchModel = {}", catchModel);
@@ -104,13 +107,13 @@ public class ControllerHandler{
     private void resetThreadName(){
         logger.debug("resetThread ThreadName={}", Thread.currentThread( ).getName( ));
         String[] threadName = Thread.currentThread( ).getName( ).split("&");
-        Thread.currentThread( ).setName(Thread.currentThread( ).getName( ).split("&")[0] + "&" + RandomUtil.randomGid( ));
+        Thread.currentThread( ).setName(threadName[0] + "&" + RandomUtil.randomGid( ));
         logger.debug("resetThread ThreadName={}", Thread.currentThread( ).getName( ));
     }
     private void reBackThreadName(){
         logger.debug("resetThread ThreadName={}", Thread.currentThread( ).getName( ));
         String[] threadName = Thread.currentThread( ).getName( ).split("&");
-        Thread.currentThread( ).setName(Thread.currentThread( ).getName( ).split("&")[0]);
+        Thread.currentThread( ).setName(threadName[0]);
         logger.debug("resetThread ThreadName={}", Thread.currentThread( ).getName( ));
     }
 }
