@@ -8,6 +8,7 @@ import lombok.Data;
 public enum ErrorCode{
     SUCCESS("0000","成功")
 
+    ,TOCKEN_CHECK_FAILED("1401","aksk签名校验失败")
     ,CONTRLLER_NOFOUND("1404","未定义的接口")
 
     ,PARAM_ERROR("2001","参数错误")

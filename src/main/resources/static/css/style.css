@@ -1,0 +1,14 @@
+/*
+	 CSS-Tricks Example
+	 by Chris Coyier
+	 http://css-tricks.com
+*/
+
+* { margin: 0; padding: 0; }
+body { font: 14px Georgia, serif; }
+#page-wrap { width: 500px; margin: 0 auto; }
+img { vertical-align: middle; }
+h2 { font-size: 20px; font-weight: normal; margin: 30px 0 10px; }
+h1 { font-size: 36px; font-weight: normal; margin: 30px 0 10px; }
+input[type=text] { border: 1px solid #2F393C; padding: 3px; vertical-align: middle; font-size: 20px; }
+#whale { width: 120px; }

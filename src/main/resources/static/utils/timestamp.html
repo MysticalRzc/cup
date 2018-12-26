@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>cup----demo</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <script src="../js/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="../js/increment.js"></script>
+    <script type="text/javascript" src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"><a href="#" onclick="menuClick('main.html')">Cup</a></div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其他功能</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">aaaa</a></dd>
+                    <dd><a href="">bbbb</a></dd>
+                    <dd><a href="">cccc</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
+                         class="layui-nav-img">
+                    Mystical
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">生产与消费</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#" onclick="menuClick('producorAndConsumer/consumer.html')">消费者</a></dd>
+                        <dd><a href="#" onclick="menuClick('producorAndConsumer/producor.html')">生产者</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">工具</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#" onclick="menuClick('utils/json.html')">JSON</a></dd>
+                        <dd><a href="#" onclick="menuClick('utils/timestamp.html')">TimeStamp</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--==================================================================================================================================-->
+    <!--=====================================================layui-body===================================================================-->
+    <div class="layui-body">
+        <div style="width:100%; height:80%">
+            <div>
+                <h1 style="text-align: center;">时间戳</h1>
+            </div>
+
+            <div style="padding: 30px 100px;">
+                <div class="layui-form" style="float: right ; padding: 15px">
+                    <input style="text-align: right" type="checkbox" checked="" name="open" lay-skin="switch"
+                           lay-filter="autoRefreshSw"
+                           lay-text="自动刷新|停止刷新">
+                </div>
+
+                <div style="padding-bottom:15px; padding-top: 15px; font-size: 20px">
+                    动态时间
+                </div>
+
+                <div style="border: double; font-size: 20px">
+                    <table>
+                        <tr height="45px">
+                            <th width="200px" style="padding-left: 10px"><span>js格式:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="nowTime1"></span></th>
+                            <th width="400px">
+                                <button class="layui-btn" onclick="copyValueById('nowTime1')">复制</button>
+                            </th>
+
+                            <th width="200px"><span>java格式:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="nowTime4"></span></th>
+                            <th width="50px">
+                                <button class="layui-btn" onclick="copyValueById('nowTime4')">复制</button>
+                            </th>
+                        </tr>
+                        <tr height="45px">
+                            <th style="padding-left: 10px"><span>标准格式:&nbsp;&nbsp;</span></th>
+                            <th><span id="nowTime2"></span></th>
+                            <th>
+                                <button class="layui-btn" onclick="copyValueById('nowTime2')">复制</button>
+                            </th>
+
+                            <th width="200px"><span>标准格式:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="nowTime5"></span></th>
+                            <th width="50px">
+                                <button class="layui-btn" onclick="copyValueById('nowTime5')">复制</button>
+                            </th>
+                        </tr>
+                        <tr height="45px">
+                            <th style="padding-left: 10px"><span>时间戳10位:&nbsp;&nbsp;</span></th>
+                            <th><span id="nowTime3"></span></th>
+                            <th>
+                                <button class="layui-btn" onclick="copyValueById('nowTime3')">复制</button>
+                            </th>
+
+                            <th width="200px"><span>时间戳13位:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="nowTime6"></span></th>
+                            <th width="50px">
+                                <button class="layui-btn" onclick="copyValueById('nowTime6')">复制</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div style="padding: 0px 100px;">
+
+
+                <div style="padding-bottom:15px; padding-top: 15px; font-size: 20px">
+                    指定时间
+                </div>
+
+                <div class="layui-form-item layui-form-pane">
+                    <div class="layui-inline" style="width: 100px">
+                        <label class="layui-form-label" style="width: 45px;">年</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="pointYear" type="text" name="title" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">月</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="pointMonth" type="text" name="title" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">日</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="pointDay" type="text" name="title" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">时</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="pointHour" type="text" name="title" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">分</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="pointMinute" type="text" name="title" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">秒</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="pointSecond" type="text" name="title" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 120px">
+                        <label class="layui-form-label" style="width: 70px;">毫秒</label>
+                        <div class="layui-input-block" style="margin-left: 70px;">
+                            <input id="pointMillisecond" type="text" name="title" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <button class="layui-btn layui-btn-normal" style="margin-top:  -12px" onclick="caculateTimeStap('date')">Go</button>
+                    <div  style="float: right;">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">时间戳</label>
+                            <div class="layui-input-block">
+                                <input id="pointTimeStamp" type="text" name="title" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <button class="layui-btn layui-btn-normal" style="margin-top:  -12px" onclick="caculateTimeStap('timeStamp')">Go</button>
+                    </div>
+
+                </div>
+                <div style="border: double; font-size: 20px">
+                    <table>
+                        <tr height="45px">
+                            <th width="200px" style="padding-left: 10px"><span>标准格式1:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="timePoint2"></span></th>
+                            <th width="400px">
+                                <button class="layui-btn" onclick="copyValueById('nowTime1')">复制</button>
+                            </th>
+
+                            <th width="200px"><span>标准格式2:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="timePoint5"></span></th>
+                            <th width="50px">
+                                <button class="layui-btn" onclick="copyValueById('nowTime4')">复制</button>
+                            </th>
+                        </tr>
+                        <tr height="45px">
+                            <th style="padding-left: 10px"><span>时间戳10位:&nbsp;&nbsp;</span></th>
+                            <th><span id="timePoint3"></span></th>
+                            <th>
+                                <button class="layui-btn" onclick="copyValueById('timePoint3')">复制</button>
+                            </th>
+
+                            <th width="200px"><span>时间戳13位:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="timePoint6"></span></th>
+                            <th width="50px">
+                                <button class="layui-btn" onclick="copyValueById('timePoint6')">复制</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="layui-form" style="float: right ; padding: 15px">
+                    <input style="text-align: right" type="checkbox" checked="" name="open" lay-skin="switch"
+                           lay-filter="dateDirectionSw"
+                           lay-text="当前时间以后|当前时间以前">
+                </div>
+
+                <div style="padding-bottom:15px; padding-top: 15px; font-size: 20px">
+                    指定时间间隔
+                </div>
+                <div class="layui-form-item layui-form-pane">
+                    <div class="layui-inline" style="width: 100px">
+                        <label class="layui-form-label" style="width: 45px;">年</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="intervalYear" type="text" name="title" value="0" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">月</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="intervalMonth" type="text" name="title" value="0" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">日</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="intervalDay" type="text" name="title" value="0" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">时</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="intervalHour" type="text" name="title" value="0" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">分</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="intervalMinute" type="text" name="title" value="0" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 90px">
+                        <label class="layui-form-label" style="width: 45px;">秒</label>
+                        <div class="layui-input-block" style="margin-left: 45px;">
+                            <input id="intervalSecond" type="text" name="title" value="0" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="width: 120px">
+                        <label class="layui-form-label" style="width: 70px;">毫秒</label>
+                        <div class="layui-input-block" style="margin-left: 70px;">
+                            <input id="intervalMillisecond" type="text" name="title" value="0" autocomplete="off"
+                                   class="layui-input wheelable">
+                        </div>
+                    </div>
+            </div>
+                <div style="border: double; font-size: 20px">
+                    <table>
+                        <tr height="45px">
+                            <th width="200px" style="padding-left: 10px"><span>标准格式1:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="intervalPoint2"></span></th>
+                            <th width="400px">
+                                <button class="layui-btn" onclick="copyValueById('nowTime1')">复制</button>
+                            </th>
+
+                            <th width="200px"><span>标准格式2:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="intervalPoint5"></span></th>
+                            <th width="50px">
+                                <button class="layui-btn" onclick="copyValueById('nowTime4')">复制</button>
+                            </th>
+                        </tr>
+                        <tr height="45px">
+                            <th style="padding-left: 10px"><span>时间戳10位:&nbsp;&nbsp;</span></th>
+                            <th><span id="intervalPoint3"></span></th>
+                            <th>
+                                <button class="layui-btn" onclick="copyValueById('timePoint3')">复制</button>
+                            </th>
+
+                            <th width="200px"><span>时间戳13位:&nbsp;&nbsp;</span></th>
+                            <th width="300px"><span id="intervalPoint6"></span></th>
+                            <th width="50px">
+                                <button class="layui-btn" onclick="copyValueById('timePoint6')">复制</button>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+
+    </div>
+    <script>
+        var dateDirectionSw = 1;
+        var autoRefresh = true;
+        window.onload = function () {
+            var time = new Date();
+            document.getElementById("pointYear").value = time.getFullYear();
+            document.getElementById("pointMonth").value = time.getMonth() + 1;
+            document.getElementById("pointDay").value = time.getDay();
+            document.getElementById("pointHour").value = time.getHours();
+            document.getElementById("pointMinute").value = time.getMinutes();
+            document.getElementById("pointSecond").value = time.getSeconds();
+            document.getElementById("pointMillisecond").value = time.getMilliseconds();
+        }
+
+        function caculateTimeStap(type) {
+            if(type == 'date'){
+                var year = parseInt(document.getElementById("pointYear").value);
+                var month = parseInt(document.getElementById("pointMonth").value);
+                var day = parseInt(document.getElementById("pointDay").value);
+                var hour = parseInt(document.getElementById("pointHour").value);
+                var minute = parseInt(document.getElementById("pointMinute").value);
+                var second = parseInt(document.getElementById("pointSecond").value);
+                var millisencond = parseInt(document.getElementById("pointMillisecond").value);
+                time = new Date(year, month - 1, day, hour, minute, second, millisencond);
+            }else if(type == 'timeStamp') {
+                var timeStamp = document.getElementById("pointTimeStamp").value;
+                if (timeStamp.length > 10)
+                    time = new Date(timeStamp*1);
+                else
+                    time = new Date(timeStamp*1000);
+            }
+            document.getElementById("timePoint2").innerText = getNowFormatDate(1, time);
+            document.getElementById("timePoint3").innerText = parseInt(time.getTime() / 1000);
+            document.getElementById("timePoint5").innerText = getNowFormatDate(2, time);
+            document.getElementById("timePoint6").innerText = time.getTime();
+
+            var interYear = parseInt(document.getElementById("intervalYear").value) * dateDirectionSw;
+            var interMonth = parseInt(document.getElementById("intervalMonth").value) * dateDirectionSw;
+            var interDay = parseInt(document.getElementById("intervalDay").value) * dateDirectionSw;
+            var interHour = parseInt(document.getElementById("intervalHour").value) * dateDirectionSw;
+            var interMinute = parseInt(document.getElementById("intervalMinute").value) * dateDirectionSw;
+            var interSecond = parseInt(document.getElementById("intervalSecond").value) * dateDirectionSw;
+            var interMillisecond = parseInt(document.getElementById("intervalMillisecond").value) * dateDirectionSw;
+
+            time2 = new Date(time.getFullYear() + interYear,time.getMonth() + interMonth  ,time.getDate() + interDay,time.getHours() + interHour,time.getMinutes() + interMinute,time.getSeconds() + interSecond,time.getMilliseconds() + interMillisecond);
+
+            document.getElementById("intervalPoint2").innerText = getNowFormatDate(1, time2);
+            document.getElementById("intervalPoint3").innerText = parseInt(time2.getTime() / 1000);
+            document.getElementById("intervalPoint5").innerText = getNowFormatDate(2, time2);
+            document.getElementById("intervalPoint6").innerText = time2.getTime();
+        }
+        function refreshTime() {
+            if (autoRefresh) {
+                document.getElementById("nowTime1").innerText = new Date().toJSON();
+                document.getElementById("nowTime2").innerText = getNowFormatDate(1);
+                document.getElementById("nowTime3").innerText = parseInt(new Date().getTime() / 1000)
+                document.getElementById("nowTime4").innerText = getNowFormatDate(3);
+                document.getElementById("nowTime5").innerText = getNowFormatDate(2);
+                document.getElementById("nowTime6").innerText = new Date().getTime()
+            }
+        }
+        setInterval(refreshTime, 50);
+
+        function getNowFormatDate(style, time) {
+            if (typeof time == "undefined")
+                var date = new Date();
+            else
+                date = time;
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            var minute = date.getMinutes();
+            var second = date.getSeconds();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            if (minute < 10) {
+                minute = "0" + minute;
+            }
+            if (second < 10) {
+                second = "0" + second;
+            }
+            if (style == 1)
+                var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                    + " " + date.getHours() + seperator2 + date.getMinutes()
+                    + seperator2 + date.getSeconds() + seperator2 + date.getMilliseconds();
+            if (style == 2)
+                var currentdate = date.getFullYear() + "年" + month + "月" + strDate
+                    + "日 " + date.getHours() + "点" + date.getMinutes()
+                    + "分" + date.getSeconds() + "秒";
+            if (style == 3) {
+                var date = new Date();
+                date.toDateString();
+                var currentdate = date.toDateString().substring(0, date.toDateString().length - 4) + date.getHours() + ":" + minute + ":" + second + " CST " + date.getFullYear();
+            }
+            return currentdate;
+        }
+        function copyValueById(documentId) {
+            var Url2 = document.getElementById(documentId).innerText;
+            var oInput = document.createElement('input');
+            oInput.value = Url2;
+            document.body.appendChild(oInput);
+            oInput.select(); // 选择对象
+            document.execCommand("Copy"); // 执行浏览器复制命令
+            oInput.className = 'oInput';
+            oInput.style.display = 'none';
+        }
+
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.form
+                , layer = layui.layer
+                , layedit = layui.layedit
+                , laydate = layui.laydate;
+            //监听指定开关
+            form.on('switch(autoRefreshSw)', function (data) {
+                autoRefresh = !autoRefresh;
+                layer.msg('自动刷新'+ autoRefresh, {
+                    offset: '6px'
+                });
+            });
+            form.on('switch(dateDirectionSw)', function (data) {
+                if(this.checked)
+                    dateDirectionSw = 1;
+                else
+                    dateDirectionSw = -1;
+                layer.msg('日期方向：' + (this.checked ? '后' : '前'), {
+                    offset: '6px'
+                });
+            });
+        });
+    </script>
+    <!--==================================================================================================================================-->
+    <!--=====================================================layui-footer=================================================================-->
+    <div class="layui-footer">
+        Quickly---Cup
+        © Mystical
+    </div>
+</div>
+<!--==================================================================================================================================-->
+<!--==========================================================js======================================================================-->
+<script>
+    var baseUrl = "../"
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    var menuClick = function (menuUrl) {
+        top.location.href = baseUrl + menuUrl;
+    };
+</script>
+</body>
+</html>

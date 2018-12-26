@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>cup----生产者列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <script src="../js/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/css/bootstrap-datetimepicker.min.css"
+          rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdn.bootcss.com/smalot-bootstrap-datetimepicker/2.4.4/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="../layui/layui.js" charset="utf-8"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"><a href="#" onclick="menuClick('main.html')">Cup</a></div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其他功能</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">aaaa</a></dd>
+                    <dd><a href="">bbbb</a></dd>
+                    <dd><a href="">cccc</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
+                         class="layui-nav-img">
+                    Mystical
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">生产与消费</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#" onclick="menuClick('producorAndConsumer/consumer.html')">消费者</a></dd>
+                        <dd><a href="#" onclick="menuClick('producorAndConsumer/producor.html')">生产者</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">工具</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#" onclick="menuClick('utils/json.html')">JSON</a></dd>
+                        <dd><a href="#" onclick="menuClick('utils/timestamp.html')">TimeStamp</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--==================================================================================================================================-->
+    <!--=====================================================layui-body===================================================================-->
+
+    <div class="layui-body">
+        <br>
+        <div class="layui-form-item">
+            <div class="form-inline">
+                <label for="requestUrl">&nbsp;接口地址</label>
+                <input type="text" class="form-control" id="requestUrl" style="width: 150px; height: 30px;"
+                       placeholder="请输入接口地址">
+                <label for="creator">创建人</label>
+                <input type="text" class="form-control" id="creator" style="width: 150px; height: 30px;"
+                       placeholder="请输入创建人">
+                <label for="dateBeginTime">开始时间</label>
+                <input id="dateBeginTime" class="form-timeInputDay" value="请选择日期" readonly>
+                <label for="dateEndTime">结束时间</label>
+                <input id="dateEndTime" class="form-timeInputDay" value="请选择日期" readonly>&nbsp;
+                <button class="layui-btn" onclick="search()">搜 索</button>
+                <button class="layui-btn" data-toggle="modal" data-target="#addItemModel" onclick="resetAddModel()">增
+                    加
+                </button>
+            </div>
+        </div>
+        <div class="layui-form">
+            <table class="layui-table" id="ctlTable">
+                <colgroup>
+                    <col width="5%">
+                    <col width="7%">
+                    <col width="15%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="2%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="2%">
+                    <col width="2%">
+                    <col width="7%">
+                    <col width="7%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>接口地址</th>
+                    <th>入参</th>
+                    <th>请求成功状态码</th>
+                    <th>请求方式</th>
+                    <th>定时请求开始时间</th>
+                    <th>结束时间</th>
+                    <th>请求步长</th>
+                    <th>统计</th>
+                    <th>AK</th>
+                    <th>SK</th>
+                    <th>校验</th>
+                    <th>状态</th>
+                    <th>创建时间</th>
+                    <th>修改时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="pageItem"></div>
+        <script>
+            function search() {
+                var request = new Object();
+                request.controllerUrl = document.getElementById("requestUrl").value;
+                request.creator = document.getElementById("creator").value;
+                request.beginTime = document.getElementById("dateBeginTime").value;
+                request.endTime = document.getElementById("dateEndTime").value;
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://47.105.105.78:10151/cup/httpProducor/config/search',
+                    data: JSON.stringify(request),
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.retCode == "0000") {
+                            var tb = document.getElementById('ctlTable');
+                            var rowNum = tb.rows.length;
+                            for (i = 2; i < rowNum; i++) {
+                                tb.deleteRow(i);
+                                rowNum = rowNum - 1;
+                                i = i - 1;
+                            }
+                            data.retData.data.forEach(addRow);
+                        }
+                    }
+                });
+            }
+            function makePage(total) {
+                layui.use(['laypage', 'layer'], function () {
+                    var laypage = layui.laypage
+                        , layer = layui.layer;
+                    //完整功能
+                    laypage.render({
+                        elem: 'pageItem'
+                        , count: total
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj, first) {
+                            var tb = document.getElementById('ctlTable');
+                            var rowNum = tb.rows.length;
+                            for (i = 2; i < rowNum; i++) {
+                                tb.deleteRow(i);
+                                rowNum = rowNum - 1;
+                                i = i - 1;
+                            }
+                            getControllerData(obj.curr, obj.limit);
+                        }
+                    });
+                });
+            }
+            function getControllerData(page, limit, first) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://47.105.105.78:10151/cup/httpProducor/config/list',
+                    data: {'page': page, 'limit': limit},
+                    dataType: "json",
+                    success: function (data) {
+                        if (first === 1) {
+                            makePage(data.retData.count);
+                        }
+                        data.retData.data.forEach(addRow);
+                    }
+                });
+            }
+            getControllerData(1, 1, 1);
+            function addRow(obj) {
+//添加行
+                var newTr = ctlTable.insertRow();
+//添加列
+                var newTd0 = newTr.insertCell();
+                var newTd1 = newTr.insertCell();
+                var newTd2 = newTr.insertCell();
+                var newTd3 = newTr.insertCell();
+                var newTd4 = newTr.insertCell();
+                var newTd5 = newTr.insertCell();
+                var newTd6 = newTr.insertCell();
+                var newTd7 = newTr.insertCell();
+                var newTd8 = newTr.insertCell();
+                var newTd9 = newTr.insertCell();
+                var newTd10 = newTr.insertCell();
+                var newTd11 = newTr.insertCell();
+                var newTd12 = newTr.insertCell();
+                var newTd13 = newTr.insertCell();
+                var newTd14 = newTr.insertCell();
+                var newTd15 = newTr.insertCell();
+//设置列内容和属性
+                newTd0.innerText = obj.id;
+                newTd1.innerText = obj.reqUrl;
+                newTd2.innerText = obj.reqParaConfig;
+                newTd3.innerText = obj.reqSuccessCode;
+                newTd4.innerText = obj.reqType
+                if(obj.reqBeginTime != null && obj.reqEndTime != null) {
+                    newTd5.innerText = timestampToTime(obj.reqBeginTime);
+                    newTd6.innerText = timestampToTime(obj.reqEndTime);
+                }
+                newTd7.innerText = obj.reqStepTime;
+                if(obj.statistics == true)
+                    newTd8.innerHTML = '<img src="../image/statistic.png" style="width: 30px"/>';
+                else
+                    newTd8.innerHTML = '<img src="../image/unStatistic.png" style="width: 30px"/>';
+                newTd9.innerText = obj.ak;
+                newTd10.innerText = obj.sk;
+                if(obj.akskCheck == true)
+                    newTd11.innerHTML = '<img src="../image/check.png" style="width: 30px"/>';
+                else
+                    newTd11.innerHTML = '<img src="../image/unCheck.png" style="width: 30px"/>';
+                newTd12.innerText = obj.status;
+                newTd13.innerText = timestampToTime(obj.createTime);
+                newTd14.innerText = timestampToTime(obj.updateTime);
+                newTd15.innerHTML = '<button class="layui-btn layui-btn-sm" data-toggle="modal" onclick="editAddress(this)"  data-target="#updateItemModel" >编辑</button><button class="layui-btn layui-btn-sm" onclick="deleteLine(this)">删除</button>';
+            }
+            function getTrueFalse(flag) {
+                if(flag == true)
+                    return "√";
+                else
+                    return "X";
+            }
+            $(function () {
+                $(".form-timeInputDay").datetimepicker({
+                    format: 'yyyy-mm-dd', // 展现格式
+                    startDate: "2000-01-01",// 开始时间
+                    endDate: "2100-01-01", // 结束时间
+                    autoclose: true, // 选择日期后关闭
+                    // 选择器打开之后首先显示的视图
+                    // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
+                    startView: 2,
+                    // 选择器所能够提供的最精确的时间选择视图
+                    // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
+                    minView: 2,
+                    language: 'zh-CN', //显示语言为中文
+                });
+                $(".form-timeInputMin").datetimepicker({
+                    format: 'yyyy-mm-dd hh:ii:ss', // 展现格式
+                    startDate: "2010-01-01",// 开始时间
+                    endDate: "2020-01-01", // 结束时间
+                    autoclose: true, // 选择日期后关闭
+                    // 选择器打开之后首先显示的视图
+                    // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
+                    startView: 2,
+                    // 选择器所能够提供的最精确的时间选择视图
+                    // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
+                    minView: 0,
+                    language: 'zh-CN', //显示语言为中文
+                });
+            });
+
+            function timestampToTime(time) {
+                var timestamp = JSON.stringify(time)
+                var Y = timestamp.substring(1, 5);
+                var M = timestamp.substring(6, 8);
+                var D = timestamp.substring(9, 11);
+                var h = timestamp.substring(12, 14);
+                var m = timestamp.substring(15, 17);
+                var s = timestamp.substring(18, 20);
+                return Y + "-" + M + "-" + D + " " + h + ":" + m + ":" + s;
+            }
+            function deleteLine(obj) {
+                if (window.confirm('你确定要删除吗？')) {
+                    var requestParam = new Object();
+                    var name = $(obj).parent().parent().find('td')[0];//通过parent()方法返回被选元素的直接父元素,找到第一个P标签。
+                    var id = $(name).text();      //获取P标签中的内容
+                    requestParam.id = id
+                    requestParam.creator = "admin";
+                    requestParam.tocken = "asdfasdfasfd";
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://47.105.105.78:10151/cup/httpProducor/config/delete',
+                        data: JSON.stringify(requestParam),
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            var t = document.getElementById('ctlTable');
+                            t.deleteRow(obj.parentNode.parentNode.rowIndex)
+                        },
+                        error: function () {
+                            alert("删除失败" + JSON.stringify(data.retMsg))
+                        }
+                    });
+
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+            function guid() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+            function updateProducor(obj) {
+                var requestParam = new Object();
+                requestParam.id = document.getElementById("producorId").value;
+                requestParam.requestUrl = document.getElementById("updateUrl").value;
+                requestParam.requestParamConfig = document.getElementById("updateReuqestParam").value;
+                requestParam.requestSuccessCode = document.getElementById("updateSuccessCode").value;
+                requestParam.requestType = document.getElementById("updateType").value;
+                requestParam.beginTime = document.getElementById("updateBeginTime").value;
+                requestParam.endTime = document.getElementById("updateEndTime").value;
+                stepUnit = document.getElementById("updateStepUnit").value;
+                requestParam.reqStepTime = document.getElementById("updateStepTime").value * stepUnit;
+
+                requestParam.statistic = requestStatiscSwitch;
+                requestParam.akskCheck = checkAkSkSwitch;
+                requestParam.ak = document.getElementById("updateAK").value;
+                requestParam.sk = document.getElementById("updateSK").value;
+                requestParam.creator = "admin";
+                requestParam.tocken = "asdfasdfasfd";
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://47.105.105.78:10151/cup/httpProducor/config/update',
+                    data: JSON.stringify(requestParam),
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        alert(JSON.stringify(data.retMsg))
+                        window.location.reload();
+                    },
+                    error: function () {
+                        alert("修改失败")
+                    }
+                });
+            }
+            function addProducor(obj,type) {
+                var requestParam = new Object();
+                requestParam.requestUrl = document.getElementById("addUrl").value;
+                requestParam.requestParamConfig = document.getElementById("addReuqestParam").value;
+                requestParam.requestSuccessCode = document.getElementById("addSuccessCode").value;
+                requestParam.requestType = document.getElementById("addType").value;
+                requestParam.beginTime = document.getElementById("addBeginTime").value;
+                requestParam.endTime = document.getElementById("addEndTime").value;
+                stepUnit = document.getElementById("addStepUnit").value;
+                requestParam.reqStepTime = document.getElementById("addStepTime").value * stepUnit;
+                requestParam.statistic = requestStatiscSwitch;
+                requestParam.akskCheck = checkAkSkSwitch;
+                requestParam.ak = document.getElementById("addAK").value;
+                requestParam.sk = document.getElementById("addSK").value;
+                requestParam.creator = "admin";
+                requestParam.tocken = "asdfasdfasfd";
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://47.105.105.78:10151/cup/httpProducor/config/add',
+                    data: JSON.stringify(requestParam),
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        alert(JSON.stringify(data.retMsg))
+                        window.location.reload();
+                    },
+                    error: function () {
+                        alert("修改失败")
+                    }
+                });
+            }
+            function editAddress(obj) {
+                var name = $(obj).parent().parent().find('td')[0];//通过parent()方法返回被选元素的直接父元素,找到第一个P标签。
+                var id = $(name).text();      //获取P标签中的内容
+                $("#producorId").val(id);	      //赋值给模态框中的input
+                var name = $(obj).parent().parent().find('td')[1];
+                var url = $(name).text();
+                $("#updateUrl").val(url);
+                var name = $(obj).parent().parent().find('td')[2];
+                var inputParam = $(name).text();
+                $("#updateReuqestParam").val(inputParam);
+                var name = $(obj).parent().parent().find('td')[3];
+                var successCode = $(name).text();
+                $("#updateSuccessCode").val(successCode);
+                var name = $(obj).parent().parent().find('td')[4];
+                var updateType = $(name).text();
+                $("#updateType").val(updateType);
+                var name = $(obj).parent().parent().find('td')[5];
+                var startTime = $(name).text();
+                $("#updateBeginTime").val(startTime);
+                var name = $(obj).parent().parent().find('td')[6];
+                var endTime = $(name).text();
+                $("#updateEndTime").val(endTime);
+                var name = $(obj).parent().parent().find('td')[7];
+                var stepTime = $(name).text();
+//                alert(parseInt(stepTime) == 0)
+//                alert(parseInt(stepTime)%10)
+                if (parseInt(stepTime) == 0){
+                    $("#updateStepUnit").val(0);
+                }else if (parseInt(stepTime) % 86400000 == 0) {
+                    $("#updateStepUnit").val(86400000);
+                    stepTime = stepTime / 86400000;
+                } else if (parseInt(stepTime) % 3600000 == 0) {
+                    $("#updateStepUnit").val(3600000);
+                    stepTime = stepTime / 3600000;
+                } else if (parseInt(stepTime) % 60000 == 0) {
+                    $("#updateStepUnit").val(60000);
+                    stepTime = stepTime / 60000;
+                } else if (parseInt(stepTime) % 1000 == 0) {
+                    $("#updateStepUnit").val(1000);
+                    stepTime = stepTime / 1000;
+                } else{
+                    $("#updateStepUnit").val(1);
+                }
+                $("#updateStepTime").val(stepTime);
+                var name = $(obj).parent().parent().find('td')[9];
+                var ak = $(name).text();
+                $("#updateAK").val(ak);
+                var name = $(obj).parent().parent().find('td')[10];
+                var sk = $(name).text();
+                $("#updateSK").val(sk);
+            }
+            function resetAddModel() {
+
+                $("#addBeginTime").val(sk);
+            }
+        </script>
+    </div>
+    <!--==================================================================================================================================-->
+    <!--=====================================================layui-footer=================================================================-->
+    <div class="layui-footer">
+        Quickly---Cup
+        © Mystical
+    </div>
+    <div class="modal fade" id="updateItemModel" tabindex="-1" role="dialog" aria-labelledby="updateItemModel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        修改接口
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-inline">
+                        <label>id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="producorId" style="width: 400px; height: 30px;"
+                               readonly="readonly"> <br><br>
+                        <label>接口地址:</label>
+                        <input type="text" class="form-control" id="updateUrl" style="width: 400px; height: 30px;"
+                               placeholder="请输入接口地址"><br><br>
+                        <label for="updateReuqestParam">输入参数:</label>
+                        <textarea type="text" class="form-control" id="updateReuqestParam"
+                                  style="width: 400px; height: 100px;" placeholder="请输入输入参数"></textarea><br><br>
+                        <label for="updateSuccessCode">成功标识:</label>
+                        <input type="text" value="0000" class="form-control" id="updateSuccessCode" style="width: 320px; height: 30px;"
+                               placeholder="0000">
+                        <div class="layui-form" style="float: right ; padding: 0px 100px 0px 0px">
+                            <input style="text-align: right" type="checkbox" name="close" lay-skin="switch"
+                                   lay-filter="requestStatiscSwitch"
+                                   lay-text="统计|不统计">
+                        </div>
+                        <br><br>
+                        <label for="addType">请求方式:</label>
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="updateType" style="width: 400px; height: 30px;  font-size: 8px"
+                                placeholder="postMethod">
+                            <option>POST</option>
+                            <option>GET</option>
+                        </select>
+                        <br><br>
+                        <label for="updateBeginTime">启动时间:</label>
+                        <input type="input" class="form-timeInputMin" value="2011-03-01 22:25:00" placeholder="请输入日期" id="updateBeginTime"
+                               style="width: 400px; height: 30px;"
+                               placeholder="启动时间"><br><br>
+                        <label for="updateEndTime">结束时间:</label>
+                        <input type="input" class="form-timeInputMin" placeholder="请输入日期" id="updateEndTime"
+                               style="width: 400px; height: 30px;"
+                               placeholder="结束时间"><br><br>
+                        <label for="updateStepTime">请求步长:</label>
+                        <input type="text" class="form-control" id="updateStepTime" style="width: 200px; height: 30px;"
+                               placeholder="请求步长">
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="updateStepUnit" style="width: 200px; height: 30px; font-size: 8px"
+                                placeholder="postMethod">
+                            <option value=0>一次性请求</option>
+                            <option value=1>毫秒</option>
+                            <option value=1000>秒</option>
+                            <option value=60000>分</option>
+                            <option value=3600000>时</option>
+                            <option value=86400000>天</option>
+                        </select><br><br>
+                        <label for="updateAK">A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
+                        <input type="text" class="form-control" id="updateAK" style="width: 320px; height: 30px;"
+                               placeholder="AK">
+                        <div class="layui-form" style="float: right ; padding: 0px 100px 0px 0px">
+                            <input style="text-align: right" type="checkbox" id="akskCheckSwitch" name="close" lay-skin="switch"
+                                   lay-filter="checkAkSkSwitch"
+                                   lay-text="校验|不校验">
+                        </div>
+                        <br><br>
+                        <label for="addSK">S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
+                        <input type="text" class="form-control" id="updateSK" style="width: 400px; height: 30px;"
+                               placeholder="SK">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="updateProducor(this)">
+                        保存任务
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="addItemModel" tabindex="-1" role="dialog" aria-labelledby="addItemModel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        添加新接口
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-inline">
+                        <label>接口地址:</label>
+                        <input type="text" class="form-control" id="addUrl" style="width: 400px; height: 30px;"
+                               placeholder="请输入接口地址"><br><br>
+                        <label for="addReuqestParam">输入参数:</label>
+                        <textarea type="text" class="form-control" id="addReuqestParam"
+                                  style="width: 400px; height: 100px;" placeholder="请输入输入参数"></textarea><br><br>
+                        <label for="addSuccessCode">成功标识:</label>
+                        <input type="text" value="0000" class="form-control" id="addSuccessCode" style="width: 320px; height: 30px;"
+                               placeholder="0000">
+                        <div class="layui-form" style="float: right ; padding: 0px 100px 0px 0px">
+                            <input style="text-align: right" type="checkbox" name="close" lay-skin="switch"
+                                   lay-filter="requestStatiscSwitch"
+                                   lay-text="统计|不统计">
+                        </div>
+                        <br><br>
+                        <label for="addType">请求方式:</label>
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="addType" style="width: 400px; height: 30px;  font-size: 8px"
+                                placeholder="postMethod">
+                            <option>POST</option>
+                            <option>GET</option>
+                        </select>
+                        <br><br>
+                        <label for="addBeginTime">启动时间:</label>
+                        <input type="input" class="form-timeInputMin" placeholder="请输入日期" id="addBeginTime"
+                               style="width: 400px; height: 30px;"
+                               placeholder="启动时间"><br><br>
+                        <label for="addEndTime">结束时间:</label>
+                        <input type="input" class="form-timeInputMin" placeholder="请输入日期" id="addEndTime"
+                               style="width: 400px; height: 30px;"
+                               placeholder="结束时间"><br><br>
+                        <label for="addStepTime">请求步长:</label>
+                        <input type="text" class="form-control" id="addStepTime" style="width: 200px; height: 30px;"
+                               placeholder="请求步长">
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="addStepUnit" style="width: 200px; height: 30px; font-size: 8px"
+                                placeholder="postMethod">
+                            <option value=0>一次性请求</option>
+                            <option value=1>毫秒</option>
+                            <option value=1000>秒</option>
+                            <option value=60000>分</option>
+                            <option value=3600000>时</option>
+                            <option value=86400000>天</option>
+                        </select><br><br>
+                        <label for="addAK">A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
+                        <input type="text" class="form-control" id="addAK" style="width: 320px; height: 30px;"
+                               placeholder="AK">
+                        <div class="layui-form" style="float: right ; padding: 0px 100px 0px 0px">
+                            <input style="text-align: right" type="checkbox" name="close" lay-skin="switch"
+                                   lay-filter="checkAkSkSwitch"
+                                   lay-text="校验|不校验">
+                        </div>
+                        <br><br>
+                        <label for="addSK">S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
+                        <input type="text" class="form-control" id="addSK" style="width: 400px; height: 30px;"
+                               placeholder="SK">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="addProducor(this)">
+                        保存任务
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div>
+<!--==================================================================================================================================-->
+<!--==========================================================js======================================================================-->
+<script>
+    var baseUrl = "../"
+    var requestStatiscSwitch = false;
+    var checkAkSkSwitch = false;
+    //JavaScript代码区域
+    layui.use(['form', 'layedit', 'laydate','element'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , element = layui.element;
+        form.on('switch(requestStatiscSwitch)', function (data) {
+            requestStatiscSwitch = this.checked;
+            layer.msg('生产统计模式：' + (this.checked ? '开起' : '关闭'), {
+                offset: '6px'
+            });
+        });
+        form.on('switch(checkAkSkSwitch)', function (data) {
+            checkAkSkSwitch = this.checked;
+            layer.msg('aksk校验：' + (this.checked ? '开': '关'), {
+                offset: '6px'
+            });
+        });
+    });
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d214947968792b839fd669a4decaaffc";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    var menuClick = function (menuUrl) {
+        top.location.href = baseUrl + menuUrl;
+    };
+</script>
+
+</body>
+</html>
