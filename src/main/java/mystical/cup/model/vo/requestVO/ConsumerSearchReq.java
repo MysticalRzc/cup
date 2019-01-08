@@ -6,7 +6,7 @@ import lombok.Data;
  * Created by Rzc on 2018/11/27.
  */
 @Data
-public class ControllerSearchReq{
+public class ConsumerSearchReq{
     private String controllerUrl;
     private String creator;
     private String beginTime;

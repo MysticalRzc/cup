@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
@@ -41,6 +42,7 @@ public class CupApplicationTests{
     public void test(){
         TestService testService = new TestService();
         try{
+            new BigDecimal(2).multiply(new BigDecimal(2));
             testService.testGenerateToken();
         }catch(Exception e){
             e.printStackTrace( );

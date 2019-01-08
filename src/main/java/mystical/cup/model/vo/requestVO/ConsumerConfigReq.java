@@ -9,7 +9,7 @@ import mystical.cup.utils.VerifyUtil;
  * Created by Rzc on 2018/10/31.
  */
 @Data
-public class ControllerConfigReq{
+public class ConsumerConfigReq{
     private Integer id;
     private String requestUrl;
     private String requestParam;

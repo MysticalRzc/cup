@@ -107,7 +107,7 @@ public class WeshareTokenHelper{
                 sbSign.append(body);
             }
             sbSign.append("|");
-            logger.debug("signature contents: {}", sbSign.toString());
+
 
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             md5.reset();
@@ -116,6 +116,7 @@ public class WeshareTokenHelper{
             //  v2-{AK}-{ExpireTime}-{Signature}
             token = String.format("%s-%s-%s-%s", TOKEN_VERSION, accessKey, expireTime,
                     new String(Hex.encodeHex(md5.digest())));
+            logger.debug("signature contents = {} , tokent = {}", sbSign.toString(),token);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             logger.error("failed to decode url or query path");

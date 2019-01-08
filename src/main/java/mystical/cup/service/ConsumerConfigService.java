@@ -1,41 +1,38 @@
 package mystical.cup.service;
 
-import mystical.cup.dao.mapper.ConfigControllerMapper;
+import mystical.cup.dao.mapper.HttpConsumerMapper;
 import mystical.cup.model.ReturnContent;
-import mystical.cup.model.database.ConfigController;
+import mystical.cup.model.database.HttpConsumerMode;
 import mystical.cup.model.enums.ErrorCode;
-import mystical.cup.utils.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Rzc on 2018/11/2.
  */
 @Service
-public class ControllerConfigService{
+public class ConsumerConfigService{
     @Autowired
-    private ConfigControllerMapper configControllerMapper;
+    private HttpConsumerMapper httpConsumerMapper;
 
-    public ReturnContent updateController(ConfigController controllerConfig){
+    public ReturnContent updateController(HttpConsumerMode httpConsumerMode){
 
-        if(configControllerMapper.updateByPrimaryKeySelective(controllerConfig) < 0){
+        if(httpConsumerMapper.updateByPrimaryKeySelective(httpConsumerMode) < 0){
             return ReturnContent.error(ErrorCode.SYSTEM_ERROR,"更新数据库字段失败");
         }
         return ReturnContent.success();
     }
 
-    public ReturnContent addController(ConfigController controllerConfig){
+    public ReturnContent addController(HttpConsumerMode httpConsumerMode){
 
-        if(configControllerMapper.insertSelective(controllerConfig)< 0){
+        if(httpConsumerMapper.insertSelective(httpConsumerMode)< 0){
             return ReturnContent.error(ErrorCode.SYSTEM_ERROR,"添加数据库字段失败");
         }
         return ReturnContent.success();
     }
-    public ReturnContent deleteController(ConfigController controllerConfig){
+    public ReturnContent deleteController(HttpConsumerMode httpConsumerMode){
 
-        if(configControllerMapper.deleteByPrimaryKey(controllerConfig.getId())< 0){
+        if(httpConsumerMapper.deleteByPrimaryKey(httpConsumerMode.getId())< 0){
             return ReturnContent.error(ErrorCode.SYSTEM_ERROR,"删除数据库字段失败");
         }
         return ReturnContent.success();

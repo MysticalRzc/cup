@@ -54,7 +54,7 @@ public class ControllerHandler{
         ContextHoldler.put("aroundAOP","proceedingJointPoint",point);
         CatchModel catchModel = new CatchModel( );
         initCatchMode(catchModel);
-        logger.debug("catchModel = {}", catchModel);
+//        logger.debug("catchModel = {}", catchModel);
 
         try{
             Object returnData = point.proceed( );
@@ -105,15 +105,11 @@ public class ControllerHandler{
     }
 
     private void resetThreadName(){
-        logger.debug("resetThread ThreadName={}", Thread.currentThread( ).getName( ));
         String[] threadName = Thread.currentThread( ).getName( ).split("&");
         Thread.currentThread( ).setName(threadName[0] + "&" + RandomUtil.randomGid( ));
-        logger.debug("resetThread ThreadName={}", Thread.currentThread( ).getName( ));
     }
     private void reBackThreadName(){
-        logger.debug("resetThread ThreadName={}", Thread.currentThread( ).getName( ));
         String[] threadName = Thread.currentThread( ).getName( ).split("&");
         Thread.currentThread( ).setName(threadName[0]);
-        logger.debug("resetThread ThreadName={}", Thread.currentThread( ).getName( ));
     }
 }

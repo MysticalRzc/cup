@@ -2,7 +2,8 @@ package mystical.cup.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import mystical.cup.handler.AccessCheck;
-import mystical.cup.service.RequestHandlerService;
+import mystical.cup.service.HttpConsumerService;
+import mystical.cup.utils.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,12 @@ import java.util.Map;
 @RestController
 public class HttpConsumer{
     @Autowired
-    private RequestHandlerService requestHandlerService;
+    private HttpConsumerService httpConsumerService;
 
     @AccessCheck(requestUrl = "/postCatch")
-    @RequestMapping(value = {"/postCatch/{a}", "/postCatch/{a}/{b}", "/postCatch/{a}/{b}/{c}"
-            , "/postCatch/{a}/{b}/{c}/{d}", "/postCatch/{a}/{b}/{c}/{d}/{e}", "/postCatch/{a}/{b}/{c}/{d}/{e}/{f}"})
-    public Object controllerPostCatch(@RequestBody(required = false) Map reqMap) throws UnsupportedEncodingException{
-        log.info("catch controller has invoke");
-        return requestHandlerService.handlerService(reqMap);
+    @RequestMapping(value = {"{a}", "{a}/{b}", "{a}/{b}/{c}"
+            , "{a}/{b}/{c}/{d}", "{a}/{b}/{c}/{d}/{e}", "{a}/{b}/{c}/{d}/{e}/{f}"})
+    public Object httpConsumer(@RequestBody(required = false) Map reqMap) throws UnsupportedEncodingException{
+        return httpConsumerService.httpConsumerService(reqMap);
     }
 }

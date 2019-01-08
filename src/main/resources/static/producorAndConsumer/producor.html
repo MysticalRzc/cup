@@ -89,11 +89,11 @@
                 <input type="text" class="form-control" id="creator" style="width: 150px; height: 30px;"
                        placeholder="请输入创建人">
                 <label for="dateBeginTime">开始时间</label>
-                <input id="dateBeginTime" class="form-controls" value="请选择日期" readonly>
+                <input id="dateBeginTime" class="form-timeInputDay" value="请选择日期" readonly>
                 <label for="dateEndTime">结束时间</label>
-                <input id="dateEndTime" class="form-controls" value="请选择日期" readonly>&nbsp;
+                <input id="dateEndTime" class="form-timeInputDay" value="请选择日期" readonly>&nbsp;
                 <button class="layui-btn" onclick="search()">搜 索</button>
-                <button class="layui-btn" data-toggle="modal" onclick="editAddress(this)" data-target="#addItemModel">增
+                <button class="layui-btn" data-toggle="modal" data-target="#addItemModel">增
                     加
                 </button>
             </div>
@@ -102,11 +102,14 @@
             <table class="layui-table" id="ctlTable">
                 <colgroup>
                     <col width="5%">
-                    <col width="10%">
-                    <col width="15%">
+                    <col width="7%">
                     <col width="15%">
                     <col width="5%">
                     <col width="5%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="5%">
+                    <col width="2%">
                     <col width="5%">
                     <col width="5%">
                     <col width="7%">
@@ -118,11 +121,14 @@
                     <th>ID</th>
                     <th>接口地址</th>
                     <th>输入参数</th>
-                    <th>输出参数</th>
+                    <th>请求成功状态码</th>
                     <th>请求方式</th>
+                    <th>定时请求开始时间</th>
+                    <th>结束时间</th>
+                    <th>请求步长</th>
+                    <th>统计</th>
                     <th>AK</th>
                     <th>SK</th>
-                    <th>描述</th>
                     <th>创建时间</th>
                     <th>修改时间</th>
                     <th>操作</th>
@@ -144,7 +150,7 @@
                 request.endTime = document.getElementById("dateEndTime").value;
                 $.ajax({
                     type: 'POST',
-                    url: 'http://47.105.105.78:10151/cup/controller/search',
+                    url: 'http://localhost:10151/cup/httpProducor/config/search',
                     data: JSON.stringify(request),
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
@@ -187,7 +193,7 @@
             function getControllerData(page, limit, first) {
                 $.ajax({
                     type: 'POST',
-                    url: 'http://47.105.105.78:10151/cup/controller/list',
+                    url: 'http://localhost:10151/cup/httpProducor/config/list',
                     data: {'page': page, 'limit': limit},
                     dataType: "json",
                     success: function (data) {
@@ -214,22 +220,28 @@
                 var newTd8 = newTr.insertCell();
                 var newTd9 = newTr.insertCell();
                 var newTd10 = newTr.insertCell();
+                var newTd11 = newTr.insertCell();
+                var newTd12 = newTr.insertCell();
+                var newTd13 = newTr.insertCell();
 //设置列内容和属性
                 newTd0.innerText = obj.id;
-                newTd1.innerText = obj.controllerUrl;
-                newTd2.innerText = obj.inputParam;
-                newTd3.innerText = obj.outputParam;
-                newTd4.innerText = obj.type;
-                newTd5.innerText = obj.ak;
-                newTd6.innerText = obj.sk;
-                newTd7.innerText = obj.decription;
-                newTd8.innerText = timestampToTime(obj.createTime);
-                newTd9.innerText = timestampToTime(obj.updateTime);
-                newTd10.innerHTML = '<button class="layui-btn layui-btn-sm" data-toggle="modal" onclick="editAddress(this)"  data-target="#updateItemModel" >编辑</button><button class="layui-btn layui-btn-sm" onclick="deleteLine(this)">删除</button>';
+                newTd1.innerText = obj.reqUrl;
+                newTd2.innerText = obj.reqParaConfig;
+                newTd3.innerText = obj.reqSuccessCode;
+                newTd4.innerText = obj.reqType
+                newTd5.innerText = obj.reqBeginTime;
+                newTd6.innerText = obj.reqEndTime;
+                newTd7.innerText = obj.reqStepTime;
+                newTd8.innerText = obj.statistics;
+                newTd9.innerText = obj.ak;
+                newTd10.innerText = obj.sk;
+                newTd11.innerText = timestampToTime(obj.createTime);
+                newTd12.innerText = timestampToTime(obj.updateTime);
+                newTd13.innerHTML = '<button class="layui-btn layui-btn-sm" data-toggle="modal" onclick="editAddress(this)"  data-target="#updateItemModel" >编辑</button><button class="layui-btn layui-btn-sm" onclick="deleteLine(this)">删除</button>';
             }
             $(function () {
-                $(".form-controls").datetimepicker({
-                    format: 'yyyy-mm-dd hh', // 展现格式
+                $(".form-timeInputDay").datetimepicker({
+                    format: 'yyyy-mm-dd', // 展现格式
                     startDate: "2010-01-01",// 开始时间
                     endDate: "2020-01-01", // 结束时间
                     autoclose: true, // 选择日期后关闭
@@ -238,7 +250,20 @@
                     startView: 2,
                     // 选择器所能够提供的最精确的时间选择视图
                     // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
-                    minView: 1,
+                    minView: 2,
+                    language: 'zh-CN', //显示语言为中文
+                });
+                $(".form-timeInputMin").datetimepicker({
+                    format: 'yyyy-mm-dd hh-ii', // 展现格式
+                    startDate: "2010-01-01",// 开始时间
+                    endDate: "2020-01-01", // 结束时间
+                    autoclose: true, // 选择日期后关闭
+                    // 选择器打开之后首先显示的视图
+                    // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
+                    startView: 2,
+                    // 选择器所能够提供的最精确的时间选择视图
+                    // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
+                    minView: 0,
                     language: 'zh-CN', //显示语言为中文
                 });
             });
@@ -264,7 +289,7 @@
                     requestParam.tocken = "asdfasdfasfd";
                     $.ajax({
                         type: 'POST',
-                        url: 'http://47.105.105.78:10151/cup/controller/delete',
+                        url: 'http://localhost:10151/cup/httpProducor/config/delete',
                         data: JSON.stringify(requestParam),
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -304,7 +329,7 @@
                 requestParam.tocken = "asdfasdfasfd";
                 $.ajax({
                     type: 'POST',
-                    url: 'http://47.105.105.78:10151/cup/controller/update',
+                    url: 'http://localhost:10151/cup/httpProducor/config/update',
                     data: JSON.stringify(requestParam),
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
@@ -317,21 +342,24 @@
                     }
                 });
             }
-            function addController(obj) {
+            function addProducor(obj) {
                 var requestParam = new Object();
-                requestParam.id = document.getElementById("controllerId").value;
                 requestParam.requestUrl = document.getElementById("addUrl").value;
-                requestParam.requestParam = document.getElementById("addReuqestParam").value;
-                requestParam.responseParam = document.getElementById("addResponseParam").value;
+                requestParam.requestParamConfig = document.getElementById("addReuqestParam").value;
+                requestParam.requestSuccessCode = document.getElementById("addSuccessCode").value;
                 requestParam.requestType = document.getElementById("addType").value;
+                requestParam.beginTime = document.getElementById("addBeginTime").value;
+                requestParam.endTime = document.getElementById("addEndTime").value;
+                requestParam.reqStepTime = document.getElementById("addStepTime").value;
+                requestParam.statistic = document.getElementById("addType").value;
+//                requestParam.desc = document.getElementById("addType").value;
                 requestParam.ak = document.getElementById("addAK").value;
                 requestParam.sk = document.getElementById("addSK").value;
-                requestParam.desc = document.getElementById("addDesc").value;
                 requestParam.creator = "admin";
                 requestParam.tocken = "asdfasdfasfd";
                 $.ajax({
                     type: 'POST',
-                    url: 'http://47.105.105.78:10151/cup/controller/add',
+                    url: 'http://localhost:10151/cup/httpProducor/config/add',
                     data: JSON.stringify(requestParam),
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
@@ -352,9 +380,9 @@
                 var name = $(obj).parent().parent().find('td')[0];//通过parent()方法返回被选元素的直接父元素,找到第一个P标签。
                 var id = $(name).text();      //获取P标签中的内容
                 $("#controllerId").val(id);	      //赋值给模态框中的input
-                var name = $(obj).parent().parent().find('td')[1];//通过parent()方法返回被选元素的直接父元素,找到第一个P标签。
-                var url = $(name).text();      //获取P标签中的内容
-                $("#updateUrl").val(url);	      //赋值给模态框中的input
+                var name = $(obj).parent().parent().find('td')[1];
+                var url = $(name).text();
+                $("#updateUrl").val(url);
                 var name = $(obj).parent().parent().find('td')[2];
                 var inputParam = $(name).text();
                 $("#updateReuqestParam").val(inputParam);
@@ -362,8 +390,8 @@
                 var outPutparam = $(name).text();
                 $("#updateResponseParam").val(outPutparam);
                 var name = $(obj).parent().parent().find('td')[4];
-                var desc = $(name).text();
-                $("#updateType").val(desc);
+                var updateType = $(name).text();
+                $("#updateType").val(updateType);
                 var name = $(obj).parent().parent().find('td')[5];
                 var desc = $(name).text();
                 $("#updateAK").val(desc);
@@ -382,14 +410,179 @@
         Quickly---Cup
         © Mystical
     </div>
+    <div class="modal fade" id="updateItemModel" tabindex="-1" role="dialog" aria-labelledby="updateItemModel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        更改接口配置
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-inline">
+                        <label>id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        <input type="text" class="form-control" id="controllerId" style="width: 400px; height: 30px;"
+                               readonly="readonly"> <br><br>
+                        <label>接口地址:</label>
+                        <input type="text" class="form-control" id="updateUrl" style="width: 400px; height: 30px;"
+                               placeholder="请输入接口地址"><br><br>
+                        <label for="updateReuqestParam">输入参数:</label>
+                        <textarea type="text" class="form-control" id="updateReuqestParam"
+                                  style="width: 400px; height: 100px;" placeholder="请输入输入参数"></textarea><br><br>
+                        <label for="updateResponseParam">成功标识:</label>
+                        <input type="text" class="form-control" id="updateResponseParam"
+                               style="width: 400px; height: 30px;"
+                               placeholder="AK"><br><br>
+                        <label for="updateType">请求方式:</label>
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="updateType" style="width: 400px; height: 30px;" placeholder="postMethod">
+                            <option>通用</option>
+                            <option>POST</option>
+                            <option>GET</option>
+                        </select>
+                        <br><br>
+                        <label for="updateBeginTime">启动时间:</label>
+                        <input type="text" class="form-control" id="updateBeginTime" style="width: 400px; height: 30px;"
+                               placeholder="AK"><br><br>
+                        <label for="updateEndTime">结束时间:</label>
+                        <input type="text" class="form-control" id="updateEndTime" style="width: 400px; height: 30px;"
+                               placeholder="AK"><br><br>
+                        <label for="updateStepTime">请求步长:</label>
+                        <input type="text" class="form-control" id="updateStepTime" style="width: 400px; height: 30px;"
+                               placeholder="AK"><br><br>
+                        <label for="updateAK">A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
+                        <input type="text" class="form-control" id="updateAK" style="width: 400px; height: 30px;"
+                               placeholder="AK"><br><br>
+                        <label for="updateSK">S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
+                        <input type="text" class="form-control" id="updateSK" style="width: 400px; height: 30px;"
+                               placeholder="SK"><br><br>
+                        <label for="updateDesc">描 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;述 :</label>
+                        <input type="text" class="form-control" id="updateDesc" style="width: 400px; height: 30px;"
+                               placeholder="描述"><br><br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="updateController(this)">
+                        提交更改
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="addItemModel" tabindex="-1" role="dialog" aria-labelledby="addItemModel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        添加新接口
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-inline">
+                        <label>接口地址:</label>
+                        <input type="text" class="form-control" id="addUrl" style="width: 400px; height: 30px;"
+                               placeholder="请输入接口地址"><br><br>
+                        <label for="addReuqestParam">输入参数:</label>
+                        <textarea type="text" class="form-control" id="addReuqestParam"
+                                  style="width: 400px; height: 100px;" placeholder="请输入输入参数"></textarea><br><br>
+                        <label for="addSuccessCode">成功标识:</label>
+                        <input type="text" class="form-control" id="addSuccessCode" style="width: 320px; height: 30px;"
+                               placeholder="0000">
+                        <div class="layui-form" style="float: right ; padding: 0px 100px 0px 0px">
+                            <input style="text-align: right" type="checkbox" name="close" lay-skin="switch"
+                                   lay-filter="autoRefreshSw"
+                                   lay-text="统计|不统计">
+                        </div>
+                        <br><br>
+                        <label for="addType">请求方式:</label>
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="addType" style="width: 400px; height: 30px;  font-size: 8px"
+                                placeholder="postMethod">
+                            <option>POST</option>
+                            <option>GET</option>
+                        </select>
+                        <br><br>
+                        <label for="addBeginTime">启动时间:</label>
+                        <input type="input" class="form-timeInputMin" value="请选择日期" id="addBeginTime"
+                               style="width: 400px; height: 30px;"
+                               placeholder="启动时间"><br><br>
+                        <label for="addEndTime">结束时间:</label>
+                        <input type="input" class="form-timeInputMin" value="请选择日期" id="addEndTime"
+                               style="width: 400px; height: 30px;"
+                               placeholder="结束时间"><br><br>
+                        <label for="addStepTime">请求步长:</label>
+                        <input type="text" class="form-control" id="addStepTime" style="width: 200px; height: 30px;"
+                               placeholder="请求步长">
+                        <select class="form-control" data-example-ids="select-form-control" class="form-control"
+                                id="stepType" style="width: 200px; height: 30px; font-size: 8px"
+                                placeholder="postMethod">
+                            <option value=0>一次性请求</option>
+                            <option value=1>毫秒</option>
+                            <option value=2>秒</option>
+                            <option value=3>分</option>
+                            <option value=4>时</option>
+                            <option value=5>天</option>
+                        </select><br><br>
+                        <label for="addAK">A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
+                        <input type="text" class="form-control" id="addAK" style="width: 320px; height: 30px;"
+                               placeholder="AK">
+                        <div class="layui-form" style="float: right ; padding: 0px 100px 0px 0px">
+                            <input style="text-align: right" type="checkbox" name="close" lay-skin="switch"
+                                   lay-filter="checkAkSkSwitch"
+                                   lay-text="校验|不校验">
+                        </div>
+                        <br><br>
+                        <label for="addSK">S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K&nbsp;&nbsp;:</label>
+                        <input type="text" class="form-control" id="addSK" style="width: 400px; height: 30px;"
+                               placeholder="SK">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="addProducor(this)">
+                        保存任务
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 </div>
 <!--==================================================================================================================================-->
 <!--==========================================================js======================================================================-->
 <script>
     var baseUrl = "../"
     //JavaScript代码区域
-    layui.use('element', function () {
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
         var element = layui.element;
+        form.on('switch(statiscRequestSwitch)', function (data) {
+            layer.msg('自动刷新'+ autoRefresh, {
+                offset: '6px'
+            });
+        });
+        form.on('switch(checkAkSkSwitch)', function (data) {
+            if(this.checked)
+                dateDirectionSw = 1;
+            else
+                dateDirectionSw = -1;
+            layer.msg('日期方向：' + (this.checked ? '后' : '前'), {
+                offset: '6px'
+            });
+        });
     });
     var _hmt = _hmt || [];
     (function () {
