@@ -232,8 +232,11 @@
                 newTd2.innerText = obj.reqParaConfig;
                 newTd3.innerText = obj.reqSuccessCode;
                 newTd4.innerText = obj.reqType
-                newTd5.innerText = obj.reqBeginTime;
-                newTd6.innerText = obj.reqEndTime;
+//                alert(obj.reqEndTime);
+                if(obj.reqBeginTime != null && obj.reqEndTime != null) {
+                    newTd5.innerText = timestampToTime(obj.reqBeginTime);
+                    newTd6.innerText = timestampToTime(obj.reqEndTime);
+                }
                 newTd7.innerText = obj.reqStepTime;
                 newTd8.innerText = obj.statistics;
                 newTd9.innerText = obj.ak;
@@ -246,8 +249,8 @@
             $(function () {
                 $(".form-timeInputDay").datetimepicker({
                     format: 'yyyy-mm-dd', // 展现格式
-                    startDate: "2100-01-01",// 开始时间
-                    endDate: "2020-01-01", // 结束时间
+                    startDate: "2000-01-01",// 开始时间
+                    endDate: "2100-01-01", // 结束时间
                     autoclose: true, // 选择日期后关闭
                     // 选择器打开之后首先显示的视图
                     // 0表示分钟(默认),1表示小时,2表示天,3表示月,4表示年
@@ -258,7 +261,7 @@
                     language: 'zh-CN', //显示语言为中文
                 });
                 $(".form-timeInputMin").datetimepicker({
-                    format: 'yyyy-mm-dd hh-ii', // 展现格式
+                    format: 'yyyy-mm-dd hh:ii:ss', // 展现格式
                     startDate: "2010-01-01",// 开始时间
                     endDate: "2020-01-01", // 结束时间
                     autoclose: true, // 选择日期后关闭
@@ -345,7 +348,7 @@
                     }
                 });
             }
-            function addProducor(obj) {
+            function addProducor(obj,type) {
                 var requestParam = new Object();
                 requestParam.requestUrl = document.getElementById("addUrl").value;
                 requestParam.requestParamConfig = document.getElementById("addReuqestParam").value;
@@ -354,9 +357,9 @@
                 requestParam.beginTime = document.getElementById("addBeginTime").value;
                 requestParam.endTime = document.getElementById("addEndTime").value;
                 requestParam.reqStepTime = document.getElementById("addStepTime").value;
-                stepUnit = document.getElementById("stepUnit").value;
+                stepUnit = document.getElementById("addStepUnit").value;
                 requestParam.statistic = document.getElementById("addType").value * stepUnit;
-                alert(requestParam.statistic);
+
                 requestParam.statistic = requestStatiscSwitch;
                 requestParam.akskCheck = checkAkSkSwitch;
                 requestParam.ak = document.getElementById("addAK").value;
@@ -400,14 +403,19 @@
                 $("#updateType").val(updateType);
                 var name = $(obj).parent().parent().find('td')[5];
                 var startTime = $(name).text();
-                $("#updateAK").value = startTime;
-                alert(startTime);
+                $("#updateBeginTime").val(startTime);
                 var name = $(obj).parent().parent().find('td')[6];
-                var desc = $(name).text();
-                $("#updateSK").val(desc);
+                var endTime = $(name).text();
+                $("#updateEndTime").val(endTime);
                 var name = $(obj).parent().parent().find('td')[7];
-                var desc = $(name).text();
-                $("#updateDesc").val(desc);
+                var stepUnit = $(name).text();
+                $("#updateStepTime").val(stepUnit);
+                var name = $(obj).parent().parent().find('td')[9];
+                var ak = $(name).text();
+                $("#updateAK").val(ak);
+                var name = $(obj).parent().parent().find('td')[10];
+                var sk = $(name).text();
+                $("#updateSK").val(sk);
             }
         </script>
     </div>
@@ -458,7 +466,7 @@
                         </select>
                         <br><br>
                         <label for="updateBeginTime">启动时间:</label>
-                        <input type="input" class="form-timeInputMin" placeholder="请输入日期" id="updateBeginTime"
+                        <input type="input" class="form-timeInputMin" value="2011-03-01 22:25:00" placeholder="请输入日期" id="updateBeginTime"
                                style="width: 400px; height: 30px;"
                                placeholder="启动时间"><br><br>
                         <label for="updateEndTime">结束时间:</label>
@@ -469,7 +477,7 @@
                         <input type="text" class="form-control" id="updateStepTime" style="width: 200px; height: 30px;"
                                placeholder="请求步长">
                         <select class="form-control" data-example-ids="select-form-control" class="form-control"
-                                id="stepUnit" style="width: 200px; height: 30px; font-size: 8px"
+                                id="updateStepUnit" style="width: 200px; height: 30px; font-size: 8px"
                                 placeholder="postMethod">
                             <option value=0>一次性请求</option>
                             <option value=1>毫秒</option>
@@ -551,7 +559,7 @@
                         <input type="text" class="form-control" id="addStepTime" style="width: 200px; height: 30px;"
                                placeholder="请求步长">
                         <select class="form-control" data-example-ids="select-form-control" class="form-control"
-                                id="stepUnit" style="width: 200px; height: 30px; font-size: 8px"
+                                id="addStepUnit" style="width: 200px; height: 30px; font-size: 8px"
                                 placeholder="postMethod">
                             <option value=0>一次性请求</option>
                             <option value=1>毫秒</option>

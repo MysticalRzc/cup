@@ -109,8 +109,8 @@ public class ProducerWebController{
         httpProducerMode.setReqSuccessCode(producorConfigReq.getRequestSuccessCode( ));
 
         httpProducerMode.setReqType(producorConfigReq.getRequestType( ));
-        httpProducerMode.setReqBeginTime(producorConfigReq.getBeginTime( ));
-        httpProducerMode.setReqEndTime(producorConfigReq.getEndTime( ));
+        httpProducerMode.setReqBeginTime(ConvertUtil.stampToDate(producorConfigReq.getEndTime( ), "yyyy-MM-dd HH;mm:ss"));
+        httpProducerMode.setReqEndTime(ConvertUtil.stampToDate(producorConfigReq.getEndTime( ), "yyyy-MM-dd HH:mm:ss"));
         httpProducerMode.setReqStepTime(producorConfigReq.getReqStepTime( ));
         httpProducerMode.setStatistics(producorConfigReq.isStatistic());
         httpProducerMode.setAk(producorConfigReq.getAk( ));
@@ -138,8 +138,8 @@ public class ProducerWebController{
         httpProducerMode.setReqSuccessCode(producorConfigReq.getRequestSuccessCode( ));
         httpProducerMode.setReqType(producorConfigReq.getRequestType( ));
         if(!VerifyUtil.isBlank(producorConfigReq.getBeginTime()) && !VerifyUtil.isBlank(producorConfigReq.getEndTime())){
-            httpProducerMode.setReqBeginTime(ConvertUtil.stampToDate(producorConfigReq.getBeginTime( ), "yyyy-MM-dd HH-mm").getTime( ) + "");
-            httpProducerMode.setReqEndTime(ConvertUtil.stampToDate(producorConfigReq.getEndTime( ), "yyyy-MM-dd HH-mm").getTime( ) + "");
+            httpProducerMode.setReqBeginTime(ConvertUtil.stampToDate(producorConfigReq.getBeginTime( ), "yyyy-MM-dd HH:mm:ss"));
+            httpProducerMode.setReqEndTime(ConvertUtil.stampToDate(producorConfigReq.getEndTime( ), "yyyy-MM-dd HH:mm:ss"));
         }
         httpProducerMode.setReqStepTime(producorConfigReq.getReqStepTime( ));
         httpProducerMode.setStatistics(producorConfigReq.isStatistic());

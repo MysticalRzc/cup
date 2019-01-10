@@ -108,6 +108,7 @@ public class ControllerHandler{
         String[] threadName = Thread.currentThread( ).getName( ).split("&");
         Thread.currentThread( ).setName(threadName[0] + "&" + RandomUtil.randomGid( ));
     }
+
     private void reBackThreadName(){
         String[] threadName = Thread.currentThread( ).getName( ).split("&");
         Thread.currentThread( ).setName(threadName[0]);
