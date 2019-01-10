@@ -137,18 +137,21 @@ public class ProducerWebController{
         httpProducerMode.setReqParaConfig(producorConfigReq.getRequestParamConfig( ));
         httpProducerMode.setReqSuccessCode(producorConfigReq.getRequestSuccessCode( ));
         httpProducerMode.setReqType(producorConfigReq.getRequestType( ));
-        httpProducerMode.setReqBeginTime(producorConfigReq.getBeginTime( ));
-        httpProducerMode.setReqEndTime(producorConfigReq.getEndTime( ));
+        if(!VerifyUtil.isBlank(producorConfigReq.getBeginTime()) && !VerifyUtil.isBlank(producorConfigReq.getEndTime())){
+            httpProducerMode.setReqBeginTime(ConvertUtil.stampToDate(producorConfigReq.getBeginTime( ), "yyyy-MM-dd HH-mm").getTime( ) + "");
+            httpProducerMode.setReqEndTime(ConvertUtil.stampToDate(producorConfigReq.getEndTime( ), "yyyy-MM-dd HH-mm").getTime( ) + "");
+        }
         httpProducerMode.setReqStepTime(producorConfigReq.getReqStepTime( ));
         httpProducerMode.setStatistics(producorConfigReq.isStatistic());
         httpProducerMode.setAk(producorConfigReq.getAk( ));
         httpProducerMode.setSk(producorConfigReq.getSk( ));
         httpProducerMode.setAkskCheck(producorConfigReq.isAkskCheck());
+        httpProducerMode.setCreator(producorConfigReq.getCreator());
 
         return productorConfigService.addController(httpProducerMode);
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/config/delete")
     public ReturnContent controllerDelete(@RequestBody ProducorConfigReq producorConfigReq){
         log.info("delete producer invoke req={}", ConvertUtil.toJson(producorConfigReq));
 
@@ -161,7 +164,7 @@ public class ProducerWebController{
         }
 
         HttpProducerMode httpProducerMode = new HttpProducerMode( );
-        httpProducerMode.setId(httpProducerMode.getId( ));
+        httpProducerMode.setId(producorConfigReq.getId());
 
         return productorConfigService.deleteController(httpProducerMode);
     }
