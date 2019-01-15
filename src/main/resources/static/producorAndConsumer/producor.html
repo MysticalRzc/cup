@@ -93,7 +93,7 @@
                 <label for="dateEndTime">结束时间</label>
                 <input id="dateEndTime" class="form-timeInputDay" value="请选择日期" readonly>&nbsp;
                 <button class="layui-btn" onclick="search()">搜 索</button>
-                <button class="layui-btn" data-toggle="modal" data-target="#addItemModel">增
+                <button class="layui-btn" data-toggle="modal" data-target="#addItemModel" onclick="resetAddModel()">增
                     加
                 </button>
             </div>
@@ -138,6 +138,7 @@
                 </thead>
                 <tbody>
                 <tr>
+
                 </tr>
                 </tbody>
             </table>
@@ -152,7 +153,7 @@
                 request.endTime = document.getElementById("dateEndTime").value;
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:10151/cup/httpProducor/config/search',
+                    url: 'http://47.105.105.78:10151/cup/httpProducor/config/search',
                     data: JSON.stringify(request),
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
@@ -195,7 +196,7 @@
             function getControllerData(page, limit, first) {
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:10151/cup/httpProducor/config/list',
+                    url: 'http://47.105.105.78:10151/cup/httpProducor/config/list',
                     data: {'page': page, 'limit': limit},
                     dataType: "json",
                     success: function (data) {
@@ -232,19 +233,30 @@
                 newTd2.innerText = obj.reqParaConfig;
                 newTd3.innerText = obj.reqSuccessCode;
                 newTd4.innerText = obj.reqType
-//                alert(obj.reqEndTime);
                 if(obj.reqBeginTime != null && obj.reqEndTime != null) {
                     newTd5.innerText = timestampToTime(obj.reqBeginTime);
                     newTd6.innerText = timestampToTime(obj.reqEndTime);
                 }
                 newTd7.innerText = obj.reqStepTime;
-                newTd8.innerText = obj.statistics;
+                if(obj.statistics == true)
+                    newTd8.innerHTML = '<img src="../image/statistic.png" style="width: 30px"/>';
+                else
+                    newTd8.innerHTML = '<img src="../image/unStatistic.png" style="width: 30px"/>';
                 newTd9.innerText = obj.ak;
                 newTd10.innerText = obj.sk;
-                newTd11.innerText = obj.akskCheck;
+                if(obj.akskCheck == true)
+                    newTd11.innerHTML = '<img src="../image/check.png" style="width: 30px"/>';
+                else
+                    newTd11.innerHTML = '<img src="../image/unCheck.png" style="width: 30px"/>';
                 newTd12.innerText = timestampToTime(obj.createTime);
                 newTd13.innerText = timestampToTime(obj.updateTime);
                 newTd14.innerHTML = '<button class="layui-btn layui-btn-sm" data-toggle="modal" onclick="editAddress(this)"  data-target="#updateItemModel" >编辑</button><button class="layui-btn layui-btn-sm" onclick="deleteLine(this)">删除</button>';
+            }
+            function getTrueFalse(flag) {
+                if(flag == true)
+                    return "√";
+                else
+                    return "X";
             }
             $(function () {
                 $(".form-timeInputDay").datetimepicker({
@@ -290,13 +302,12 @@
                     var requestParam = new Object();
                     var name = $(obj).parent().parent().find('td')[0];//通过parent()方法返回被选元素的直接父元素,找到第一个P标签。
                     var id = $(name).text();      //获取P标签中的内容
-//                    alert(id);
                     requestParam.id = id
                     requestParam.creator = "admin";
                     requestParam.tocken = "asdfasdfasfd";
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:10151/cup/httpProducor/config/delete',
+                        url: 'http://47.105.105.78:10151/cup/httpProducor/config/delete',
                         data: JSON.stringify(requestParam),
                         contentType: "application/json;charset=utf-8",
                         dataType: "json",
@@ -321,21 +332,27 @@
                     return v.toString(16);
                 });
             }
-            function updateController(obj) {
+            function updateProducor(obj) {
                 var requestParam = new Object();
-                requestParam.id = document.getElementById("controllerId").value;
+                requestParam.id = document.getElementById("producorId").value;
                 requestParam.requestUrl = document.getElementById("updateUrl").value;
-                requestParam.requestParam = document.getElementById("updateReuqestParam").value;
-                requestParam.responseParam = document.getElementById("updateResponseParam").value;
+                requestParam.requestParamConfig = document.getElementById("updateReuqestParam").value;
+                requestParam.requestSuccessCode = document.getElementById("updateSuccessCode").value;
                 requestParam.requestType = document.getElementById("updateType").value;
+                requestParam.beginTime = document.getElementById("updateBeginTime").value;
+                requestParam.endTime = document.getElementById("updateEndTime").value;
+                stepUnit = document.getElementById("updateStepUnit").value;
+                requestParam.reqStepTime = document.getElementById("updateStepTime").value * stepUnit;
+
+                requestParam.statistic = requestStatiscSwitch;
+                requestParam.akskCheck = checkAkSkSwitch;
                 requestParam.ak = document.getElementById("updateAK").value;
                 requestParam.sk = document.getElementById("updateSK").value;
-                requestParam.desc = document.getElementById("updateDesc").value;
                 requestParam.creator = "admin";
                 requestParam.tocken = "asdfasdfasfd";
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:10151/cup/httpProducor/config/update',
+                    url: 'http://47.105.105.78:10151/cup/httpProducor/config/update',
                     data: JSON.stringify(requestParam),
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
@@ -356,10 +373,8 @@
                 requestParam.requestType = document.getElementById("addType").value;
                 requestParam.beginTime = document.getElementById("addBeginTime").value;
                 requestParam.endTime = document.getElementById("addEndTime").value;
-                requestParam.reqStepTime = document.getElementById("addStepTime").value;
                 stepUnit = document.getElementById("addStepUnit").value;
-                requestParam.statistic = document.getElementById("addType").value * stepUnit;
-
+                requestParam.reqStepTime = document.getElementById("addStepTime").value * stepUnit;
                 requestParam.statistic = requestStatiscSwitch;
                 requestParam.akskCheck = checkAkSkSwitch;
                 requestParam.ak = document.getElementById("addAK").value;
@@ -368,7 +383,7 @@
                 requestParam.tocken = "asdfasdfasfd";
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:10151/cup/httpProducor/config/add',
+                    url: 'http://47.105.105.78:10151/cup/httpProducor/config/add',
                     data: JSON.stringify(requestParam),
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
@@ -381,14 +396,10 @@
                     }
                 });
             }
-
-            function showInfo(o) {
-                alert(o.innerHTML)
-            }
             function editAddress(obj) {
                 var name = $(obj).parent().parent().find('td')[0];//通过parent()方法返回被选元素的直接父元素,找到第一个P标签。
                 var id = $(name).text();      //获取P标签中的内容
-                $("#controllerId").val(id);	      //赋值给模态框中的input
+                $("#producorId").val(id);	      //赋值给模态框中的input
                 var name = $(obj).parent().parent().find('td')[1];
                 var url = $(name).text();
                 $("#updateUrl").val(url);
@@ -408,14 +419,37 @@
                 var endTime = $(name).text();
                 $("#updateEndTime").val(endTime);
                 var name = $(obj).parent().parent().find('td')[7];
-                var stepUnit = $(name).text();
-                $("#updateStepTime").val(stepUnit);
+                var stepTime = $(name).text();
+//                alert(parseInt(stepTime) == 0)
+//                alert(parseInt(stepTime)%10)
+                if (parseInt(stepTime) == 0){
+                    $("#updateStepUnit").val(0);
+                }else if (parseInt(stepTime) % 86400000 == 0) {
+                    $("#updateStepUnit").val(86400000);
+                    stepTime = stepTime / 86400000;
+                } else if (parseInt(stepTime) % 3600000 == 0) {
+                    $("#updateStepUnit").val(3600000);
+                    stepTime = stepTime / 3600000;
+                } else if (parseInt(stepTime) % 60000 == 0) {
+                    $("#updateStepUnit").val(60000);
+                    stepTime = stepTime / 60000;
+                } else if (parseInt(stepTime) % 1000 == 0) {
+                    $("#updateStepUnit").val(1000);
+                    stepTime = stepTime / 1000;
+                } else{
+                    $("#updateStepUnit").val(1);
+                }
+                $("#updateStepTime").val(stepTime);
                 var name = $(obj).parent().parent().find('td')[9];
                 var ak = $(name).text();
                 $("#updateAK").val(ak);
                 var name = $(obj).parent().parent().find('td')[10];
                 var sk = $(name).text();
                 $("#updateSK").val(sk);
+            }
+            function resetAddModel() {
+
+                $("#addBeginTime").val(sk);
             }
         </script>
     </div>
@@ -440,7 +474,7 @@
                 <div class="modal-body">
                     <div class="form-inline">
                         <label>id:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        <input type="text" class="form-control" id="controllerId" style="width: 400px; height: 30px;"
+                        <input type="text" class="form-control" id="producorId" style="width: 400px; height: 30px;"
                                readonly="readonly"> <br><br>
                         <label>接口地址:</label>
                         <input type="text" class="form-control" id="updateUrl" style="width: 400px; height: 30px;"
@@ -490,7 +524,7 @@
                         <input type="text" class="form-control" id="updateAK" style="width: 320px; height: 30px;"
                                placeholder="AK">
                         <div class="layui-form" style="float: right ; padding: 0px 100px 0px 0px">
-                            <input style="text-align: right" type="checkbox" name="close" lay-skin="switch"
+                            <input style="text-align: right" type="checkbox" id="akskCheckSwitch" name="close" lay-skin="switch"
                                    lay-filter="checkAkSkSwitch"
                                    lay-text="校验|不校验">
                         </div>
@@ -503,7 +537,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary" onclick="addProducor(this)">
+                    <button type="button" class="btn btn-primary" onclick="updateProducor(this)">
                         保存任务
                     </button>
                 </div>

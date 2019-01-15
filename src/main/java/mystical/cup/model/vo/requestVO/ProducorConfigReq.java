@@ -38,7 +38,7 @@ public class ProducorConfigReq{
         }else if(!"0".equals(reqStepTime)){
             if(VerifyUtil.isBlank(reqStepTime)){
                 reqStepTime = "0";
-            }else if(beginTime == null || endTime == null || ConvertUtil.stampToDate(beginTime, "").getTime( ) >= ConvertUtil.stampToDate(endTime, "").getTime( )){
+            }else if(beginTime == null || endTime == null || ConvertUtil.stampToDate(beginTime, "yyyy-MM-dd HH:mm:ss").getTime( ) >= ConvertUtil.stampToDate(endTime, "yyyy-MM-dd HH:mm:ss").getTime( )){
 
             }
         }else if(VerifyUtil.isBlank(creator) || VerifyUtil.isBlank(tocken)){
