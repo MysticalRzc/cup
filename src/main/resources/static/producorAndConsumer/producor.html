@@ -113,6 +113,7 @@
                     <col width="5%">
                     <col width="5%">
                     <col width="2%">
+                    <col width="2%">
                     <col width="7%">
                     <col width="7%">
                     <col width="10%">
@@ -121,7 +122,7 @@
                 <tr>
                     <th>ID</th>
                     <th>接口地址</th>
-                    <th>输入参数</th>
+                    <th>入参</th>
                     <th>请求成功状态码</th>
                     <th>请求方式</th>
                     <th>定时请求开始时间</th>
@@ -131,6 +132,7 @@
                     <th>AK</th>
                     <th>SK</th>
                     <th>校验</th>
+                    <th>状态</th>
                     <th>创建时间</th>
                     <th>修改时间</th>
                     <th>操作</th>
@@ -227,6 +229,7 @@
                 var newTd12 = newTr.insertCell();
                 var newTd13 = newTr.insertCell();
                 var newTd14 = newTr.insertCell();
+                var newTd15 = newTr.insertCell();
 //设置列内容和属性
                 newTd0.innerText = obj.id;
                 newTd1.innerText = obj.reqUrl;
@@ -248,9 +251,10 @@
                     newTd11.innerHTML = '<img src="../image/check.png" style="width: 30px"/>';
                 else
                     newTd11.innerHTML = '<img src="../image/unCheck.png" style="width: 30px"/>';
-                newTd12.innerText = timestampToTime(obj.createTime);
-                newTd13.innerText = timestampToTime(obj.updateTime);
-                newTd14.innerHTML = '<button class="layui-btn layui-btn-sm" data-toggle="modal" onclick="editAddress(this)"  data-target="#updateItemModel" >编辑</button><button class="layui-btn layui-btn-sm" onclick="deleteLine(this)">删除</button>';
+                newTd12.innerText = obj.status;
+                newTd13.innerText = timestampToTime(obj.createTime);
+                newTd14.innerText = timestampToTime(obj.updateTime);
+                newTd15.innerHTML = '<button class="layui-btn layui-btn-sm" data-toggle="modal" onclick="editAddress(this)"  data-target="#updateItemModel" >编辑</button><button class="layui-btn layui-btn-sm" onclick="deleteLine(this)">删除</button>';
             }
             function getTrueFalse(flag) {
                 if(flag == true)
