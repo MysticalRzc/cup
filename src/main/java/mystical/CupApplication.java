@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @MapperScan("mystical.cup.dao.mapper")
 @SpringBootApplication
-//@ImportResource({"classpath*:spring/spring.xml"})
+@ImportResource({"classpath*:spring/spring.xml"})
 public class CupApplication {
 
 	public static void main(String[] args) {

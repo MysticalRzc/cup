@@ -9,14 +9,16 @@
                         http://www.dangdang.com/schema/ddframe/reg/reg.xsd
                         http://www.dangdang.com/schema/ddframe/job
                         http://www.dangdang.com/schema/ddframe/job/job.xsd">
-    <!--配置作业注册中心 -->
-    <!--<reg:zookeeper id="regCenter" server-lists="localhost:8899" namespace="dd-job" base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3" />-->
 
-    <!-- 配置作业-->
-    <!--<job:simple id="demoSimpleSpringJob" class="mystical.cup.job.MyElasticJob" registry-center-ref="regCenter" cron="0/10 * * * * ?" sharding-total-count="3" sharding-item-parameters="0=A,1=B,2=C" />-->
+    <reg:zookeeper id="regCenter" server-lists="47.105.105.78:2184" namespace="dd-job"
+                   base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3"/>
 
-    <!--<job:simple id="MyElastticJob" reconcile-interval-minutes="10" class="mystical.cup.job.MyElasticJob" registry-center-ref="regCenter"-->
-                <!--sharding-total-count="3" sharding-item-parameters="0=subscribe_task_notify,1=notify_task,2=subscribe_task_migrate" cron="5 * * * * ?"-->
-                <!--overwrite="true">-->
-    <!--</job:simple>-->
+    <job:dataflow id="notifyAmountJob1" reconcile-interval-minutes="10" class="mystical.cup.job.MySimpleJob1" registry-center-ref="regCenter" sharding-total-count="5" cron="0/1 * * * * ?" overwrite="true">
+    </job:dataflow>
+
+    <job:dataflow id="notifyAmountJob2" reconcile-interval-minutes="10" class="mystical.cup.job.MySimpleJob1" registry-center-ref="regCenter" sharding-total-count="5" cron="0/1 * * * * ?" overwrite="true">
+    </job:dataflow>
+
+    <job:dataflow id="notifyAmountJob3" reconcile-interval-minutes="10" class="mystical.cup.job.MySimpleJob1" registry-center-ref="regCenter" sharding-total-count="5" cron="0/1 * * * * ?" overwrite="true">
+    </job:dataflow>
 </beans>
