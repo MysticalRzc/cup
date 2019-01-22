@@ -35,10 +35,10 @@
             targetPackage="mystical.cup.dao.mapper" targetProject="../../src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-        <!--<table tableName="http_statistics" domainObjectName="HttpStatistics"/>-->
-        <table tableName="http_producer"  domainObjectName="HttpProducerMode"/>
-        <!--<table tableName="http_producer_data" domainObjectName="HttpProducerData"/>-->
-        <!--<table tableName="http_consumer_date" domainObjectName="HttpConsumerDate"/>-->
+        <!--<table tableName="http_statistics" domainObjectName="HttpStatisticsMode"/>-->
+        <!--<table tableName="http_producer"  domainObjectName="HttpProducerMode"/>-->
+        <table tableName="http_producer_data" domainObjectName="HttpProducerDataMode"/>
+        <!--<table tableName="http_consumer_date" domainObjectName="HttpConsumerDateMode"/>-->
         <!--<table tableName="http_consumer" domainObjectName="HttpConsumer"/>-->
     </context>
 </generatorConfiguration>

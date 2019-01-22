@@ -1,10 +1,7 @@
 package mystical.cup.service;
 
-import mystical.cup.controller.HttpProducer;
-import mystical.cup.dao.mapper.HttpConsumerMapper;
 import mystical.cup.dao.mapper.HttpProducerMapper;
 import mystical.cup.model.ReturnContent;
-import mystical.cup.model.database.HttpConsumerMode;
 import mystical.cup.model.database.HttpProducerMode;
 import mystical.cup.model.enums.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;

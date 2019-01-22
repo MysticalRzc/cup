@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-public class HttpConsumer{
+public class HttpConsumerController{
     @Autowired
     private HttpConsumerService httpConsumerService;
 

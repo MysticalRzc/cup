@@ -2,7 +2,6 @@ package mystical.cup.service;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import mystical.cup.controller.HttpProducer;
 import mystical.cup.model.database.HttpProducerMode;
 import mystical.cup.utils.ConvertUtil;
 import mystical.cup.utils.Utility;
@@ -10,7 +9,6 @@ import mystical.cup.utils.akskUtil.WeshareTokenHelper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 import org.springframework.web.client.RestTemplate;
 
 /**

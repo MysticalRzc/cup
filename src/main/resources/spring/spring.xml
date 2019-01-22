@@ -13,12 +13,6 @@
     <reg:zookeeper id="regCenter" server-lists="47.105.105.78:2184" namespace="dd-job"
                    base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3"/>
 
-    <job:dataflow id="notifyAmountJob1" reconcile-interval-minutes="10" class="mystical.cup.job.MySimpleJob1" registry-center-ref="regCenter" sharding-total-count="5" cron="0/1 * * * * ?" overwrite="true">
-    </job:dataflow>
-
-    <job:dataflow id="notifyAmountJob2" reconcile-interval-minutes="10" class="mystical.cup.job.MySimpleJob1" registry-center-ref="regCenter" sharding-total-count="5" cron="0/1 * * * * ?" overwrite="true">
-    </job:dataflow>
-
-    <job:dataflow id="notifyAmountJob3" reconcile-interval-minutes="10" class="mystical.cup.job.MySimpleJob1" registry-center-ref="regCenter" sharding-total-count="5" cron="0/1 * * * * ?" overwrite="true">
+    <job:dataflow id="notifyAmountJob1" reconcile-interval-minutes="10" class="mystical.cup.job.ConsumerJob" registry-center-ref="regCenter" sharding-total-count="5" cron="0/1 * * * * ?" overwrite="true">
     </job:dataflow>
 </beans>

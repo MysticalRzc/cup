@@ -16,7 +16,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/httpProducer")
-public class HttpProducer{
+public class HttpProducerController{
 
     @Autowired
     private HttpClientService httpClientService;

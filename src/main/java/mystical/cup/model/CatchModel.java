@@ -1,6 +1,7 @@
 package mystical.cup.model;
 
 import lombok.Data;
+import mystical.cup.model.database.HttpProducerDataMode;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,4 +22,14 @@ public class CatchModel{
     private long requestTime;
 
     private Object Exception;
+
+    public void copyToMode(HttpProducerDataMode httpProducerDataMode){
+        httpProducerDataMode.setReqJobId(this.getGid());
+        httpProducerDataMode.setReqUrl(this.getRequestURL());
+        httpProducerDataMode.setReqParam(this.getRequestParam());
+        httpProducerDataMode.setRespParam(this.getResponseParam());
+        httpProducerDataMode.setReqTime(this.getRequestTime()+"");
+        httpProducerDataMode.setRespTime(this.getResponseTime()+"");
+        httpProducerDataMode.setErrorCode("0000");
+    }
 }
